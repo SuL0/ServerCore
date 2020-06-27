@@ -1,0 +1,12 @@
+name: ServerCore
+version: 2.6.4
+api-version: 1.15
+main: me.sul.servercore.Main
+author: SuL
+softdepend: [CrackShot, CrackShotAddition]
+description: "Core Plugin"
+
+commands:
+  서버저장:
+    description: save server
+  ptest:
