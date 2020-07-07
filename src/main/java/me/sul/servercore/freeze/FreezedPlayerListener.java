@@ -52,7 +52,7 @@ public class FreezedPlayerListener implements Listener {
 			String cmd = event.getMessage().split(" ")[0].toLowerCase();
 			final Player player = event.getPlayer();
 			event.setCancelled(true);
-			player.sendMessage("¡×c¡×l°æ°í! ¡×fÁö±Ý »óÅÂ¿¡¼­ ¸í·É¾î¸¦ »ç¿ëÇÏ½Ç ¼ö ¾ø½À´Ï´Ù.");
+			player.sendMessage("Â§cÂ§lê²½ê³ ! Â§fì§€ê¸ˆ ìƒíƒœì—ì„œ ëª…ë ¹ì–´ë¥¼ ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 		}
 	}
 
@@ -69,7 +69,7 @@ public class FreezedPlayerListener implements Listener {
 				return;
 			}
 			
-			// ¶³¾îÁö´Â °ÍÀº Çã¿ë
+			// ë–¨ì–´ì§€ëŠ” ê²ƒì€ í—ˆìš©
 			if (from.getBlockX() == to.getBlockX()
 				&& from.getBlockZ() == to.getBlockZ()
 				&& from.getY() - to.getY() >= 0) {

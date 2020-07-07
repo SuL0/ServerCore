@@ -1,6 +1,6 @@
 package me.sul.servercore.playertoolchangeevent;
 
-import me.sul.crackshotaddition.util.CrackShotAPI;
+import me.sul.crackshotaddition.util.CrackShotAdditionAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,8 +16,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class PlayerMainItemChangeListener implements Listener {
-    HashMap<Player, ItemStack> mainItemOfPlayers = new HashMap<Player, ItemStack>();
+public class InventoryItemListener implements Listener {
+    HashMap<Player, ItemStack> mainItemOfPlayers = new HashMap<>();  // defaultContainer.addSlotListener() - a()에서 previousIs 얻을 방법이 없기때문.
 
 
     @EventHandler
@@ -26,32 +26,35 @@ public class PlayerMainItemChangeListener implements Listener {
 
         EntityPlayer ep = ((CraftPlayer)e.getPlayer()).getHandle();
         ep.defaultContainer.addSlotListener(new ICrafting() {
-            Player p = e.getPlayer();
+            Player player = e.getPlayer();
 
             @Override
             public void a(Container container, NonNullList<net.minecraft.server.v1_12_R1.ItemStack> nonNullList) {}
 
             @Override
-            public void a(Container container, int i, net.minecraft.server.v1_12_R1.ItemStack itemStack) {
-                Bukkit.getServer().broadcastMessage("inventory Listener");
-                int eventSlot = InventorySlotConverterUtil.nmsSlotToSpigotSlot(i);
-                ItemStack previousIs = mainItemOfPlayers.containsKey(p) ? mainItemOfPlayers.get(p) : new ItemStack(Material.AIR);
-                ItemStack newIs = CraftItemStack.asBukkitCopy(itemStack);
-                if (eventSlot == p.getInventory().getHeldItemSlot()) {
-                    String previousWeaponTitle = CrackShotAPI.getWeaponTitle(previousIs);
-                    String newWeaponTitle = CrackShotAPI.getWeaponTitle(newIs);
-                    if (previousWeaponTitle != null && newWeaponTitle != null) {
-                        if (previousWeaponTitle.equals(newWeaponTitle)) {  // �ѱ� �Ѿ� �̸� �ٲ�°� ���� -> previousIs�� ��Ȯ���� �ʰԵ�
-                            return;
-                        }
-                    }
-                    Bukkit.getPluginManager().callEvent(new PlayerMainItemChangeEvent(p, previousIs, newIs));
-                    mainItemOfPlayers.put(p, newIs);
+            public void a(Container container, int nmsSlot, net.minecraft.server.v1_12_R1.ItemStack nmsIs) {
+                int newSlot = InventorySlotConverterUtil.nmsSlotToSpigotSlot(nmsSlot);
+                ItemStack previousIs = mainItemOfPlayers.containsKey(player) ? mainItemOfPlayers.get(player) : new ItemStack(Material.AIR);
+                ItemStack newIs = CraftItemStack.asBukkitCopy(nmsIs);
+
+                Bukkit.getPluginManager().callEvent(new InventoryItemChangedEvent(player, newSlot, newIs)); // Call InventoryItemChangedEvent
+
+                // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때
+                if (newSlot == player.getInventory().getHeldItemSlot()) {
+                    String previousWeaponTitle = CrackShotAdditionAPI.getWeaponTitle(previousIs);
+                    String newWeaponTitle = CrackShotAdditionAPI.getWeaponTitle(newIs);
+                    if (previousWeaponTitle != null && newWeaponTitle != null && previousWeaponTitle.equals(newWeaponTitle)) return; // 총기 총알 이름 바뀌는건 제외 -> previousIs가 정확하지 않게됨
+
+                    Bukkit.getPluginManager().callEvent(new PlayerMainItemChangeEvent(player, previousIs, newIs)); // Call PlayerMainItemChangeEvent
+                    mainItemOfPlayers.put(player, newIs);
                 }
             }
 
             @Override
-            public void setContainerData(Container container, IInventory iInventory) { }
+            public void setContainerData(Container container, int i, int i1) {}
+
+            @Override
+            public void setContainerData(Container container, IInventory iInventory) {}
         });
     }
 

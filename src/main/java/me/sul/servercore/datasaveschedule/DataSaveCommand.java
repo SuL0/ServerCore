@@ -20,9 +20,9 @@ public class DataSaveCommand implements CommandExecutor {
             }
         }
         ServerCore.getInstance().getServer().getPluginManager().callEvent((Event)new DataSaveScheduleEvent(false));
-        ServerCore.getInstance().getLogger().log(Level.INFO, "¼­¹ö µ¥ÀÌÅÍ Áï½Ã ÀúÀå");
+        ServerCore.getInstance().getLogger().log(Level.INFO, "ì„œë²„ ë°ì´í„° ì¦‰ì‹œ ì €ì¥");
         if (commandSender instanceof Player) {
-            ((Player)commandSender).sendMessage(ChatAPI.format("&c&lSERVER: &f¼­¹ö µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ¿´½À´Ï´Ù."));
+            ((Player)commandSender).sendMessage(ChatAPI.format("&c&lSERVER: &fì„œë²„ ë°ì´í„°ë¥¼ ì €ì¥í•˜ì˜€ìŠµë‹ˆë‹¤."));
         }
         return true;
     }

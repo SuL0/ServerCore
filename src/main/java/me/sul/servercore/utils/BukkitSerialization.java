@@ -12,9 +12,8 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 public class BukkitSerialization {
-	
-// graywolf336 Á÷·ÄÈ­/¿ªÁ÷·ÄÈ­
-	
+
+// graywolf336 ì§ë ¬í™”/ì—­ì§ë ¬í™”
     /**
      * 
      * A method to serialize an {@link ItemStack} array to Base64 String.
@@ -48,7 +47,7 @@ public class BukkitSerialization {
         }
     }
 
-    
+
     /**
      * A method to serialize an inventory to Base64 string.
      * 

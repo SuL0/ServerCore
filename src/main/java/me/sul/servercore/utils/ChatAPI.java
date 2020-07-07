@@ -8,9 +8,9 @@ public class ChatAPI {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
     public static void sendUnknownCommandMessage(Player p) {
-        p.sendMessage(ChatAPI.format("&c&lHELP: &f¾Ë ¼ö ¾ø´Â ¸í·É¾îÀÔ´Ï´Ù."));
+        p.sendMessage(ChatAPI.format("&c&lHELP: &fì•Œ ìˆ˜ ì—†ëŠ” ëª…ë ¹ì–´ì…ë‹ˆë‹¤."));
     }
     public static void sendInsufficientPermissionMessage(Player p) {
-        p.sendMessage(ChatAPI.format("&c&lHELP: &c´ç½Å¿¡°Ô´Â ±ÇÇÑÀÌ ¾ø½À´Ï´Ù!"));
+        p.sendMessage(ChatAPI.format("&c&lHELP: &cë‹¹ì‹ ì—ê²ŒëŠ” ê¶Œí•œì´ ì—†ìŠµë‹ˆë‹¤!"));
     }
 }

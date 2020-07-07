@@ -15,7 +15,7 @@ public class DataSaveScheduler implements Listener {
         new BukkitRunnable() {
             public void run() {
                 ServerCore.getInstance().getServer().getPluginManager().callEvent((Event)new DataSaveScheduleEvent(false));
-                ServerCore.getInstance().getLogger().log(Level.INFO, "¼­¹ö ÀúÀå½Ã°£ : " + SAVE_INTERVAL + "m");
+                ServerCore.getInstance().getLogger().log(Level.INFO, "ì„œë²„ ì €ìž¥ì‹œê°„ : " + SAVE_INTERVAL + "m");
             }
         }.runTaskTimer((Plugin) ServerCore.getInstance(), SAVE_INTERVAL * 1200, SAVE_INTERVAL * 1200);
     }

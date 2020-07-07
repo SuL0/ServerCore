@@ -1,12 +1,16 @@
 name: ServerCore
 version: 2.6.4
-api-version: 1.15
-main: me.sul.servercore.Main
+api-version: 1.12
+main: me.sul.servercore.ServerCore
 author: SuL
-softdepend: [CrackShot, CrackShotAddition]
+softdepend:
+  - CrackShot
+  - CrackShotAddition
+  - NBTAPI
+  - ProtocolLib
 description: "Core Plugin"
 
 commands:
   서버저장:
     description: save server
-  ptest:
+  itempacket:

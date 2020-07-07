@@ -5,7 +5,10 @@ import me.sul.servercore.datasaveschedule.DataSaveScheduleEvent;
 import me.sul.servercore.datasaveschedule.DataSaveScheduler;
 import me.sul.servercore.freeze.FreezePlayer;
 import me.sul.servercore.freeze.FreezedPlayerListener;
-import me.sul.servercore.playertoolchangeevent.PlayerMainItemChangeListener;
+import me.sul.servercore.inventorymodeling.InventoryModeling;
+import me.sul.servercore.playertoolchangeevent.InventoryItemListener;
+//import me.sul.servercore.serialnumber.SerialNumberAPI;
+//import me.sul.servercore.serialnumber.SerialNumberCounter;
 import me.sul.servercore.serialnumber.SerialNumberAPI;
 import me.sul.servercore.serialnumber.SerialNumberCounter;
 import org.bukkit.Bukkit;
@@ -24,32 +27,39 @@ public class ServerCore extends JavaPlugin implements Listener {
 		instance = this;
 		freezePlayer = new FreezePlayer();
 		Bukkit.getPluginManager().registerEvents(this, this);
-		getCommand("ptest").setExecutor(new TestCommand());
+		registerDataSaveSchedule();
+		registerFreeze();
+		registerPlayerToolChangeEvent();
+		registerSerialNumber();
+		registerInventoryModeling();
 	}
 
 	private void registerDataSaveSchedule() {
 		Bukkit.getPluginManager().registerEvents(new DataSaveScheduler(), this);
-		getCommand("¼­¹öÀúÀå").setExecutor(new DataSaveCommand());
+		getCommand("ì„œë²„ì €ì¥").setExecutor(new DataSaveCommand());
 	}
 	private void registerFreeze() {
 		Bukkit.getPluginManager().registerEvents(new FreezedPlayerListener(), this);
 	}
 	private void registerPlayerToolChangeEvent() {
-		Bukkit.getPluginManager().registerEvents(new PlayerMainItemChangeListener(), this);
+		Bukkit.getPluginManager().registerEvents(new InventoryItemListener(), this);
 	}
 	private void registerSerialNumber() {
 		new SerialNumberAPI();
 		Bukkit.getPluginManager().registerEvents(new SerialNumberCounter(), this);
 	}
+	private void registerInventoryModeling() {
+		Bukkit.getPluginManager().registerEvents(new InventoryModeling(), this);
+	}
 
-	// ÀÌ°Å Á¦´ë·Î µÇ´ÂÁö ¸ğ¸£°Ú³×.
-	// onDisable() ½ÇÇàµÇ°í ³ª¼­ event°¡ 1Æ½ µÚ¿¡ ¹Ş¾ÆÁú ¼öµµ ÀÖÀ½.
-	// TODO) ÀÌº¥Æ®°¡ Á¦¶§ ¹Ş¾ÆÁö´ÂÁö È®ÀÎÇÒ ÇÊ¿ä°¡ ÀÖÀ½.
-	// TODO) ÀÌ°Å ¿ùµå ÀúÀåµµ ÇØÁà¾ßµÇ´Âµ¥, ÄÚµå¸¦ ¾îµğ´Ù°¡ ³Ö¾î³ù´õ¶ó?
+	// ì´ê±° ì œëŒ€ë¡œ ë˜ëŠ”ì§€ ëª¨ë¥´ê² ë„¤.
+	// onDisable() ì‹¤í–‰ë˜ê³  ë‚˜ì„œ eventê°€ 1í‹± ë’¤ì— ë°›ì•„ì§ˆ ìˆ˜ë„ ìˆìŒ.
+	// TODO) ì´ë²¤íŠ¸ê°€ ì œë•Œ ë°›ì•„ì§€ëŠ”ì§€ í™•ì¸í•  í•„ìš”ê°€ ìˆìŒ.
+	// TODO) ì´ê±° ì›”ë“œ ì €ì¥ë„ í•´ì¤˜ì•¼ë˜ëŠ”ë°, ì½”ë“œë¥¼ ì–´ë””ë‹¤ê°€ ë„£ì–´ë†¨ë”ë¼?
 	@Override
 	public void onDisable() {
 		ServerCore.getInstance().getServer().getPluginManager().callEvent((Event)new DataSaveScheduleEvent(false));
-		ServerCore.getInstance().getLogger().log(Level.INFO, "[¼­¹ö Á¾·á] ¼­¹ö µ¥ÀÌÅÍ ÀúÀå");
+		ServerCore.getInstance().getLogger().log(Level.INFO, "[ì„œë²„ ì¢…ë£Œ] ì„œë²„ ë°ì´í„° ì €ì¥");
 	}
 
 
