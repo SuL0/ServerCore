@@ -1,6 +1,7 @@
 package me.sul.servercore.playertoolchangeevent;
 
 import me.sul.crackshotaddition.util.CrackShotAdditionAPI;
+import me.sul.servercore.serialnumber.SerialNumberAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -41,11 +42,12 @@ public class InventoryItemListener implements Listener {
 
                 // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때
                 if (newSlot == player.getInventory().getHeldItemSlot()) {
-                    String previousWeaponTitle = CrackShotAdditionAPI.getWeaponTitle(previousIs);
-                    String newWeaponTitle = CrackShotAdditionAPI.getWeaponTitle(newIs);
-                    if (previousWeaponTitle != null && newWeaponTitle != null && previousWeaponTitle.equals(newWeaponTitle)) return; // 총기 총알 이름 바뀌는건 제외 -> previousIs가 정확하지 않게됨
+                    if (SerialNumberAPI.hasSerialNumber(previousIs) && SerialNumberAPI.hasSerialNumber(newIs) &&
+                            SerialNumberAPI.getSerialNumber(previousIs) == SerialNumberAPI.getSerialNumber(newIs)) return; // 아이템 정보 바뀌는건 제외(시리얼번호가 이전과 같은지 여부로 확인)
 
+                    // 이거 AIR도 put되긴하나?
                     Bukkit.getPluginManager().callEvent(new PlayerMainItemChangeEvent(player, previousIs, newIs)); // Call PlayerMainItemChangeEvent
+                    Bukkit.getServer().broadcastMessage("[ServerCore] MainItemOfPlayer ItemStack: " + newIs.getType().toString());
                     mainItemOfPlayers.put(player, newIs);
                 }
             }
@@ -63,9 +65,8 @@ public class InventoryItemListener implements Listener {
         Player p = e.getPlayer();
         ItemStack previousIs = p.getInventory().getItem(e.getPreviousSlot()) != null ? e.getPlayer().getInventory().getItem(e.getPreviousSlot()) : new ItemStack(Material.AIR);
         ItemStack newIs = p.getInventory().getItem(e.getNewSlot()) != null ? e.getPlayer().getInventory().getItem(e.getNewSlot()) : new ItemStack(Material.AIR);
-        if (previousIs.getType().equals(Material.AIR) && newIs.getType().equals(Material.AIR)) {
-            return;
-        }
+        if (previousIs.getType().equals(Material.AIR) && newIs.getType().equals(Material.AIR)) return;
+
         Bukkit.getPluginManager().callEvent(new PlayerMainItemChangeEvent(p, previousIs, newIs));
         mainItemOfPlayers.put(p, newIs);
     }
