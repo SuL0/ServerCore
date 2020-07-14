@@ -2,7 +2,7 @@ package me.sul.servercore.playertoolchangeevent;
 
 public class InventorySlotConverterUtil {
     public static int nmsSlotToSpigotSlot(int nmsSlot) {
-        int spigotSlot = -1;
+        int spigotSlot = nmsSlot;
         if (nmsSlot >= 5 && nmsSlot <= 8) {  // 갑옷칸
             if (nmsSlot == 5) { spigotSlot = 39; }
             else if (nmsSlot == 6) { spigotSlot = 38; }
