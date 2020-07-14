@@ -38,13 +38,14 @@ public class InventoryItemListener implements Listener {
 
                 Bukkit.getPluginManager().callEvent(new InventoryItemChangedEvent(p, newSlot, newIs)); // EVENT: Call InventoryItemChangedEvent
 
-                // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때. 아이템 정보 바뀌는건 제외(시리얼번호 비교)
+                // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때. 아이템 정보 바뀌는건 제외(시리얼번호 비교. 없다면 그냥 계속 중복되게 호출됨)
                 if (newSlot == p.getInventory().getHeldItemSlot()) {
                     ItemStack clonedPreviousMainIs = mainItemOfPlayers.containsKey(p) ? mainItemOfPlayers.get(p) : new ItemStack(Material.AIR);
                     if (SerialNumberAPI.hasSerialNumber(clonedPreviousMainIs) && SerialNumberAPI.hasSerialNumber(newIs) &&
-                            SerialNumberAPI.getSerialNumber(clonedPreviousMainIs) == SerialNumberAPI.getSerialNumber(newIs)) return;
+                            SerialNumberAPI.getSerialNumber(clonedPreviousMainIs) == SerialNumberAPI.getSerialNumber(newIs))
+                        return;
 
-                    Bukkit.getPluginManager().callEvent(new PlayerMainItemChangeEvent(p, clonedPreviousMainIs, newIs)); // EVENT: Call PlayerMainItemChangeEvent
+                    Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedEvent(p, clonedPreviousMainIs, newIs)); // EVENT: Call PlayerMainItemChangeEvent
                     mainItemOfPlayers.put(p, newIs);
                 }
             }
@@ -64,7 +65,7 @@ public class InventoryItemListener implements Listener {
         ItemStack newIs = p.getInventory().getItem(e.getNewSlot()) != null ? e.getPlayer().getInventory().getItem(e.getNewSlot()) : new ItemStack(Material.AIR);
         if (clonedPreviousIs.getType().equals(Material.AIR) && newIs.getType().equals(Material.AIR)) return;
 
-        Bukkit.getPluginManager().callEvent(new PlayerMainItemChangeEvent(p, clonedPreviousIs, newIs));
+        Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedEvent(p, clonedPreviousIs, newIs));
         mainItemOfPlayers.put(p, newIs);
     }
 

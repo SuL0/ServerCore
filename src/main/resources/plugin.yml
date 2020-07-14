@@ -13,4 +13,3 @@ description: "Core Plugin"
 commands:
   서버저장:
     description: save server
-  itempacket:

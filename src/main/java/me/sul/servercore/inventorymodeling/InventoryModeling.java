@@ -73,7 +73,7 @@ public class InventoryModeling implements Listener {
             if (isPlayerInv(view)) {  // 인벤 제외한 GUI열면 false
                 sendInventoryModelingItemPacket(player);
             }
-        }, 0L, INV_UPDATE_INTERVAL/4);
+        }, 0L, INV_UPDATE_INTERVAL/5);
         this.itemRetentionTasks.put(player, task);
 
         Bukkit.getScheduler().runTaskLater(ServerCore.getInstance(), () -> {
