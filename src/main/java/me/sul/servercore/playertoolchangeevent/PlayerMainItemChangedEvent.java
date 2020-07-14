@@ -19,7 +19,7 @@ public class PlayerMainItemChangedEvent extends Event { // 아이템을 바꾸�
     }
 
     public Player getPlayer() { return player; }
-    public ItemStack getClonedPreviousItemClone() { return clonedPreviousItem; }
+    public ItemStack getClonedPreviousItem() { return clonedPreviousItem; }
     public ItemStack getNewItem() { return newItem; }
 
     @Override
