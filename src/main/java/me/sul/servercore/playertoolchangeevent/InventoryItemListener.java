@@ -42,7 +42,7 @@ public class InventoryItemListener implements Listener {
                 if (newSlot == p.getInventory().getHeldItemSlot()) {
                     ItemStack clonedPreviousMainIs = mainItemOfPlayers.containsKey(p) ? mainItemOfPlayers.get(p) : new ItemStack(Material.AIR);
                     if (SerialNumberAPI.hasSerialNumber(clonedPreviousMainIs) && SerialNumberAPI.hasSerialNumber(newIs) &&
-                            SerialNumberAPI.getSerialNumber(clonedPreviousMainIs) == SerialNumberAPI.getSerialNumber(newIs))
+                            SerialNumberAPI.getSerialNumber(clonedPreviousMainIs).equals(SerialNumberAPI.getSerialNumber(newIs)))
                         return;
 
                     Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedEvent(p, clonedPreviousMainIs, newIs)); // EVENT: Call PlayerMainItemChangeEvent

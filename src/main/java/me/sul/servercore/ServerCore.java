@@ -10,10 +10,14 @@ import me.sul.servercore.playertoolchangeevent.InventoryItemListener;
 //import me.sul.servercore.serialnumber.SerialNumberAPI;
 //import me.sul.servercore.serialnumber.SerialNumberCounter;
 import me.sul.servercore.serialnumber.SerialNumberAPI;
-import me.sul.servercore.serialnumber.SerialNumberCounter;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -44,10 +48,7 @@ public class ServerCore extends JavaPlugin implements Listener {
 	private void registerPlayerToolChangeEvent() {
 		Bukkit.getPluginManager().registerEvents(new InventoryItemListener(), this);
 	}
-	private void registerSerialNumber() {
-		new SerialNumberAPI();
-		Bukkit.getPluginManager().registerEvents(new SerialNumberCounter(), this);
-	}
+	private void registerSerialNumber() { new SerialNumberAPI(); }
 	private void registerInventoryModeling() {
 		Bukkit.getPluginManager().registerEvents(new InventoryModeling(), this);
 	}

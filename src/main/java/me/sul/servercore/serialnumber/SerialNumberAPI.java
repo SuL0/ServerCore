@@ -1,38 +1,28 @@
 package me.sul.servercore.serialnumber;
 
-import me.sul.servercore.ServerCore;
-import org.bukkit.NamespacedKey;
+import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class SerialNumberAPI {
-    private static SerialNumberAPI serialNumberAPI;
+    private static final String SERIALNUMBERKEY = "SerialNumber";
 
-    public SerialNumberAPI() {
-        serialNumberAPI = this;
-    }
-    public static SerialNumberAPI getAPI() {
-        return serialNumberAPI;
-    }
-
-    public ItemStack carveSerialNumber(ItemStack is) {
-        ItemMeta meta = is.getItemMeta();
-        is.setItemMeta(carveSerialNumber(meta));
-        return is;
-    }
-    public ItemMeta carveSerialNumber(ItemMeta meta) {
-        NamespacedKey key = new NamespacedKey(ServerCore.getInstance(), "Serial-Number");
-        meta.getPersistentDataContainer().set(key, PersistentDataType.LONG, SerialNumberCounter.getInstance().getCountAndAddOne());
-        return meta;
+    public static ItemStack carveSerialNumber(ItemStack is) {
+        NBTItem nbti = new NBTItem(is);
+        nbti.setUUID(SERIALNUMBERKEY, UUID.randomUUID());
+        return nbti.getItem();
     }
 
-    public long getSerialNumber(ItemStack is) {
-        ItemMeta meta = is.getItemMeta();
-        return getSerialNumber(meta);
+    public static boolean hasSerialNumber(ItemStack is) {
+        if (is.getType().equals(Material.AIR)) return false;
+        NBTItem nbti = new NBTItem(is);
+        return nbti.hasKey(SERIALNUMBERKEY);
     }
-    public long getSerialNumber(ItemMeta meta) {
-        NamespacedKey key = new NamespacedKey(ServerCore.getInstance(), "Serial-Number");
-        return meta.getPersistentDataContainer().getOrDefault(key, PersistentDataType.LONG, (long)-1);
+    public static UUID getSerialNumber(ItemStack is) {
+        NBTItem nbti = new NBTItem(is);
+        return nbti.getUUID(SERIALNUMBERKEY);
     }
 }
