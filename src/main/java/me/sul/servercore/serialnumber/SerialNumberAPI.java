@@ -12,7 +12,7 @@ public class SerialNumberAPI {
 
     public static ItemStack carveSerialNumber(ItemStack is) {
         NBTItem nbti = new NBTItem(is);
-        nbti.setUUID(SERIALNUMBERKEY, UUID.randomUUID());
+        nbti.setString(SERIALNUMBERKEY, UUID.randomUUID().toString());
         return nbti.getItem();
     }
 
@@ -21,8 +21,8 @@ public class SerialNumberAPI {
         NBTItem nbti = new NBTItem(is);
         return nbti.hasKey(SERIALNUMBERKEY);
     }
-    public static UUID getSerialNumber(ItemStack is) {
+    public static String getSerialNumber(ItemStack is) {
         NBTItem nbti = new NBTItem(is);
-        return nbti.getUUID(SERIALNUMBERKEY);
+        return nbti.getString(SERIALNUMBERKEY);
     }
 }
