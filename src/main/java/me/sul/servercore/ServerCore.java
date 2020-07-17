@@ -6,18 +6,12 @@ import me.sul.servercore.datasaveschedule.DataSaveScheduler;
 import me.sul.servercore.freeze.FreezePlayer;
 import me.sul.servercore.freeze.FreezedPlayerListener;
 import me.sul.servercore.inventorymodeling.InventoryModeling;
+import me.sul.servercore.kickallbeforeserverstop.KickAllBeforeServerStop;
 import me.sul.servercore.playertoolchangeevent.InventoryItemListener;
-//import me.sul.servercore.serialnumber.SerialNumberAPI;
-//import me.sul.servercore.serialnumber.SerialNumberCounter;
 import me.sul.servercore.serialnumber.SerialNumberAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -36,6 +30,7 @@ public class ServerCore extends JavaPlugin implements Listener {
 		registerPlayerToolChangeEvent();
 		registerSerialNumber();
 		registerInventoryModeling();
+		registerKickAllBeforeServerStop();
 	}
 
 	private void registerDataSaveSchedule() {
@@ -51,6 +46,9 @@ public class ServerCore extends JavaPlugin implements Listener {
 	private void registerSerialNumber() { new SerialNumberAPI(); }
 	private void registerInventoryModeling() {
 		Bukkit.getPluginManager().registerEvents(new InventoryModeling(), this);
+	}
+	private void registerKickAllBeforeServerStop() {
+		Bukkit.getPluginManager().registerEvents(new KickAllBeforeServerStop(), this);
 	}
 
 	// 이거 제대로 되는지 모르겠네.

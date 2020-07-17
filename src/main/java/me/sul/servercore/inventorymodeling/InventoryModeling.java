@@ -1,33 +1,28 @@
 package me.sul.servercore.inventorymodeling;
 
-import com.comphenix.protocol.PacketType;
 import me.sul.servercore.ServerCore;
 import me.sul.servercore.playertoolchangeevent.InventoryItemChangedEvent;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ItemSpawnEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.util.HashMap;
-import java.util.Map;
 
 // 원본 코드 출처 : https://github.com/AgentTroll/static-player-inv/blob/master/src/main/java/com/gmail/woodyc40/staticplayerinv/Main.java
 // NOTE: 패킷으로 조합대에 템을 넣는 방법은 p.updateInventory()를 하면 아이템이 다 날아감. 근데 1초마다 자동 update되는건 안그럼.
+
+// NOTE: 서버를 닫기 전 Kick을 하면 상관없는데, 유저를 추방하지 않고 닫아버리면 아이템이 드랍됨. -> 서버에서 나갈 때 onClose()가 호출됨.
+// NOTE: onClose()에 의해서 아이템이 삭제되고, 1틱뒤에 아이템이 다시 설정되려고 하는데 유저는 이미 나갔으므로 무시됨.
 public class InventoryModeling implements Listener {
     private static final int PLAYER_CRAFT_INV_SIZE = 5;
     private final ItemStack INVENTORY_MODELING_ITEM;
@@ -81,7 +76,6 @@ public class InventoryModeling implements Listener {
             view.getTopInventory().clear();
             // 조합대에 다시 아이템 넣어주기
             Bukkit.getScheduler().runTaskLater(ServerCore.getInstance(), () -> { // 1틱안에 다른 인벤을 열거나, 죽었을 시 추후의 onRespawn/onClose에서 처리하게 돼 있음.
-                Bukkit.getServer().broadcastMessage("SETSLOT - onClose");
                 addButtonToCraftingTable(p);
             }, 1L);
         }
@@ -125,7 +119,7 @@ public class InventoryModeling implements Listener {
     @EventHandler
     public void onItemSpawn(ItemSpawnEvent e) {
         ItemStack is = e.getEntity().getItemStack();
-        if (is.equals(BUTTON1) || is.equals(BUTTON2) || is.equals(BUTTON3) || is.equals(BUTTON4)) {
+        if (is.equals(BUTTON1) || is.equals(BUTTON2) || is.equals(BUTTON3) || is.equals(BUTTON4) || is.equals(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 스폰 취소 로그 추가
             Bukkit.getServer().broadcastMessage("§4[심각] BUTTON 드랍이 시도됨.");
             e.setCancelled(true);
@@ -135,7 +129,7 @@ public class InventoryModeling implements Listener {
     @EventHandler
     public void onItemAdded(InventoryItemChangedEvent e) {
         ItemStack is = e.getItemStack();
-        if (is.equals(BUTTON1) || is.equals(BUTTON2) || is.equals(BUTTON3) || is.equals(BUTTON4)) {
+        if (is.equals(BUTTON1) || is.equals(BUTTON2) || is.equals(BUTTON3) || is.equals(BUTTON4) || is.equals(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 획득 취소 로그 추가
             Bukkit.getServer().broadcastMessage("§4[심각] " + e.getPlayer().getDisplayName() + "§4에게서 BUTTON 획득이 시도됨.");
             e.getPlayer().getInventory().setItem(e.getSlot(), new ItemStack(Material.AIR));

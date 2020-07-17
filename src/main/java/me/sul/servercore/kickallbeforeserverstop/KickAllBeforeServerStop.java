@@ -1,6 +1,5 @@
 package me.sul.servercore.kickallbeforeserverstop;
 
-import me.sul.servercore.ServerCore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +19,7 @@ public class KickAllBeforeServerStop implements Listener {
             for (Player p: Bukkit.getServer().getOnlinePlayers()) {
                 p.kickPlayer(STOP_MESSAGE);
             }
-            Bukkit.shutdown(); // 1틱뒤에 닫으면, 그 사이에 접속 시도하는 유저들이 문제가 될 수도 있을 듯.
+            Bukkit.shutdown();
         }
     }
 
@@ -31,7 +30,7 @@ public class KickAllBeforeServerStop implements Listener {
             for (Player p: Bukkit.getServer().getOnlinePlayers()) {
                 p.kickPlayer(STOP_MESSAGE);
             }
-            Bukkit.shutdown(); // 1틱뒤에 닫으면, 그 사이에 접속 시도하는 유저들이 문제가 될 수도 있을 듯.
+            Bukkit.shutdown();
         }
     }
 }

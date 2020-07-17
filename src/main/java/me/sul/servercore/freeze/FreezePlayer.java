@@ -33,7 +33,7 @@ public class FreezePlayer {
 
 	
 	public boolean getPlayerIsFreezed(UUID pUUID) {
-		return (freezedPlayerList.contains(pUUID)) ? true : false;
+		return freezedPlayerList.contains(pUUID);
 	}
 	public boolean getPlayerIsFreezed(OfflinePlayer p) {
 		return getPlayerIsFreezed(p.getUniqueId());
