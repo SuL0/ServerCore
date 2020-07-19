@@ -33,21 +33,35 @@ public class InventoryModeling implements Listener {
 
     public InventoryModeling() {
         // 아이템 추가
-        BUTTON1 = new ItemStack(Material.GOLD_HOE);
+        ItemStack button1 = new ItemStack(Material.GOLD_HOE);
+        ItemMeta button1Meta = button1.getItemMeta();
+        button1Meta.setDisplayName("1번 버튼");
+        button1.setItemMeta(button1Meta);
+        BUTTON1 = button1;
+
         ItemStack button2 = new ItemStack(Material.GOLD_HOE);
         ItemMeta button2Meta = button2.getItemMeta();
         button2Meta.setDisplayName("2번 버튼");
         button2.setItemMeta(button2Meta);
         BUTTON2 = button2;
 
-        BUTTON3 = new ItemStack(Material.GOLD_HOE);
+        ItemStack button3 = new ItemStack(Material.GOLD_HOE);
+        ItemMeta button3Meta = button3.getItemMeta();
+        button3Meta.setDisplayName("2번 버튼");
+        button3.setItemMeta(button3Meta);
+        BUTTON3 = button3;
+
         ItemStack button4 = new ItemStack(Material.GOLD_HOE);
         ItemMeta button4Meta = button4.getItemMeta();
         button4Meta.setDisplayName("4번 버튼");
         button4.setItemMeta(button4Meta);
         BUTTON4 = button4;
 
-        INVENTORY_MODELING_ITEM = new ItemStack(Material.GOLD_HOE, 1, (short)16);
+        ItemStack inventoryModelingItem = new ItemStack(Material.GOLD_HOE, 1, (short)16);
+        ItemMeta inventoryModelingItemMeta = inventoryModelingItem.getItemMeta();
+        inventoryModelingItemMeta.setDisplayName("§f");
+        inventoryModelingItem.setItemMeta(inventoryModelingItemMeta);
+        INVENTORY_MODELING_ITEM = inventoryModelingItem;
 
         // 레시피 추가
         NamespacedKey invModelingKey = new NamespacedKey(ServerCore.getInstance(), "inventory_modeling_item");
@@ -117,9 +131,9 @@ public class InventoryModeling implements Listener {
      버그 방지
     */
     @EventHandler
-    public void onItemSpawn(ItemSpawnEvent e) {
+    public void removeButtonTryingToDrop(ItemSpawnEvent e) {
         ItemStack is = e.getEntity().getItemStack();
-        if (is.equals(BUTTON1) || is.equals(BUTTON2) || is.equals(BUTTON3) || is.equals(BUTTON4) || is.equals(INVENTORY_MODELING_ITEM)) {
+        if (is.isSimilar(BUTTON1) || is.isSimilar(BUTTON2) || is.isSimilar(BUTTON3) || is.isSimilar(BUTTON4) || is.isSimilar(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 스폰 취소 로그 추가
             Bukkit.getServer().broadcastMessage("§4[심각] BUTTON 드랍이 시도됨.");
             e.setCancelled(true);
@@ -127,9 +141,9 @@ public class InventoryModeling implements Listener {
     }
 
     @EventHandler
-    public void onItemAdded(InventoryItemChangedEvent e) {
+    public void preventToObtainButton(InventoryItemChangedEvent e) {
         ItemStack is = e.getItemStack();
-        if (is.equals(BUTTON1) || is.equals(BUTTON2) || is.equals(BUTTON3) || is.equals(BUTTON4) || is.equals(INVENTORY_MODELING_ITEM)) {
+        if (is.isSimilar(BUTTON1) || is.isSimilar(BUTTON2) || is.isSimilar(BUTTON3) || is.isSimilar(BUTTON4) || is.isSimilar(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 획득 취소 로그 추가
             Bukkit.getServer().broadcastMessage("§4[심각] " + e.getPlayer().getDisplayName() + "§4에게서 BUTTON 획득이 시도됨.");
             e.getPlayer().getInventory().setItem(e.getSlot(), new ItemStack(Material.AIR));
