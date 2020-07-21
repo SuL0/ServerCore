@@ -8,22 +8,22 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
-public class SerialNumberAPI {
-    private static final String SERIALNUMBERKEY = "SerialNumber";
+public class UniqueIdAPI {
+    private static final String UNIQUEID_KEY = "UniqueID";
 
-    public static void carveSerialNumber(ItemStack is) {
+    public static void carveUniqueID(ItemStack is) {
         NBTItem nbti = new NBTItem(is);
-        nbti.setString(SERIALNUMBERKEY, UUID.randomUUID().toString());
+        nbti.setString(UNIQUEID_KEY, UUID.randomUUID().toString());
         is.setItemMeta(nbti.getItem().getItemMeta());
     }
 
-    public static boolean hasSerialNumber(ItemStack is) {
+    public static boolean hasUniqueID(ItemStack is) {
         if (is.getType().equals(Material.AIR)) return false;
         NBTItem nbti = new NBTItem(is);
-        return nbti.hasKey(SERIALNUMBERKEY);
+        return nbti.hasKey(UNIQUEID_KEY);
     }
-    public static String getSerialNumber(ItemStack is) {
+    public static String getUniqueID(ItemStack is) {
         NBTItem nbti = new NBTItem(is);
-        return nbti.getString(SERIALNUMBERKEY);
+        return nbti.getString(UNIQUEID_KEY);
     }
 }

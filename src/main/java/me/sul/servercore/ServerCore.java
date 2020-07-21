@@ -8,7 +8,7 @@ import me.sul.servercore.freeze.FreezedPlayerListener;
 import me.sul.servercore.inventorymodeling.InventoryModeling;
 import me.sul.servercore.kickallbeforeserverstop.KickAllBeforeServerStop;
 import me.sul.servercore.playertoolchangeevent.InventoryItemListener;
-import me.sul.servercore.serialnumber.SerialNumberAPI;
+import me.sul.servercore.serialnumber.UniqueIdAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -43,7 +43,7 @@ public class ServerCore extends JavaPlugin implements Listener {
 	private void registerPlayerToolChangeEvent() {
 		Bukkit.getPluginManager().registerEvents(new InventoryItemListener(), this);
 	}
-	private void registerSerialNumber() { new SerialNumberAPI(); }
+	private void registerSerialNumber() { new UniqueIdAPI(); }
 	private void registerInventoryModeling() {
 		Bukkit.getPluginManager().registerEvents(new InventoryModeling(), this);
 	}
