@@ -53,7 +53,7 @@ public class ServerCore extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new KickAllBeforeServerStop(), this);
 	}
 	private void registerTimeManager() {
-		new WorldManager();
+		Bukkit.getPluginManager().registerEvents(new WorldManager(), this);
 	}
 
 	// 이거 제대로 되는지 모르겠네.

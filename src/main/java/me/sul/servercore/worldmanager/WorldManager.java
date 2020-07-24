@@ -3,8 +3,11 @@ package me.sul.servercore.worldmanager;
 import me.sul.servercore.ServerCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.weather.WeatherChangeEvent;
 
-public class WorldManager {
+public class WorldManager implements Listener {
     public WorldManager() {
         // 월드 GameRule 설정
         for (World world : Bukkit.getServer().getWorlds()) {
@@ -25,5 +28,13 @@ public class WorldManager {
                 if (world.isThundering()) world.setThundering(false);
             }
         }, 0L, 40*20L);
+    }
+
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent e) {
+        if (e.isCancelled()) return;
+        if (e.toWeatherState()) { // true if the weather is being set to raining, false otherwise
+            e.setCancelled(true);
+        }
     }
 }
