@@ -9,7 +9,7 @@ import me.sul.servercore.inventorymodeling.InventoryModeling;
 import me.sul.servercore.kickallbeforeserverstop.KickAllBeforeServerStop;
 import me.sul.servercore.playertoolchangeevent.InventoryItemListener;
 import me.sul.servercore.serialnumber.UniqueIdAPI;
-import me.sul.servercore.timeandweathermanager.TimeAndWeatherManager;
+import me.sul.servercore.worldmanager.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -53,7 +53,7 @@ public class ServerCore extends JavaPlugin implements Listener {
 		Bukkit.getPluginManager().registerEvents(new KickAllBeforeServerStop(), this);
 	}
 	private void registerTimeManager() {
-		new TimeAndWeatherManager();
+		new WorldManager();
 	}
 
 	// 이거 제대로 되는지 모르겠네.
