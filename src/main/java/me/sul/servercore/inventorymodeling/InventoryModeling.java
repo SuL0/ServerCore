@@ -18,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.logging.Level;
+
 // 원본 코드 출처 : https://github.com/AgentTroll/static-player-inv/blob/master/src/main/java/com/gmail/woodyc40/staticplayerinv/Main.java
 // NOTE: 패킷으로 조합대에 템을 넣는 방법은 p.updateInventory()를 하면 아이템이 다 날아감. 근데 1초마다 자동 update되는건 안그럼.
 
@@ -47,7 +49,7 @@ public class InventoryModeling implements Listener {
 
         ItemStack button3 = new ItemStack(Material.GOLD_HOE);
         ItemMeta button3Meta = button3.getItemMeta();
-        button3Meta.setDisplayName("2번 버튼");
+        button3Meta.setDisplayName("3번 버튼");
         button3.setItemMeta(button3Meta);
         BUTTON3 = button3;
 
@@ -130,12 +132,19 @@ public class InventoryModeling implements Listener {
     /*
      버그 방지
     */
+
+    // 플레이어가 정상적으로 나가지 않고, '현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.'(인터넷?) 로 나가게 될 경우 아이템을 드랍하게됨.
     @EventHandler
     public void removeButtonTryingToDrop(ItemSpawnEvent e) {
         ItemStack is = e.getEntity().getItemStack();
         if (is.isSimilar(BUTTON1) || is.isSimilar(BUTTON2) || is.isSimilar(BUTTON3) || is.isSimilar(BUTTON4) || is.isSimilar(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 스폰 취소 로그 추가
-            Bukkit.getServer().broadcastMessage("§4[심각] BUTTON 드랍이 시도됨.");
+            for (Player p: Bukkit.getServer().getOnlinePlayers()) {
+                if (p.isOp()) {
+                    p.sendMessage("§4[심각] BUTTON 드랍이 시도됨.");
+                }
+            }
+            Bukkit.getServer().getLogger().log(Level.WARNING, "§4[심각] BUTTON 드랍이 시도됨.");
             e.setCancelled(true);
         }
     }
@@ -145,7 +154,12 @@ public class InventoryModeling implements Listener {
         ItemStack is = e.getItemStack();
         if (is.isSimilar(BUTTON1) || is.isSimilar(BUTTON2) || is.isSimilar(BUTTON3) || is.isSimilar(BUTTON4) || is.isSimilar(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 획득 취소 로그 추가
-            Bukkit.getServer().broadcastMessage("§4[심각] " + e.getPlayer().getDisplayName() + "§4에게서 BUTTON 획득이 시도됨.");
+            for (Player p: Bukkit.getServer().getOnlinePlayers()) {
+                if (p.isOp()) {
+                    p.sendMessage("§4[심각] " + e.getPlayer().getDisplayName() + "§4에게서 BUTTON 획득이 시도됨.");
+                }
+            }
+            Bukkit.getServer().getLogger().log(Level.WARNING, "§4[심각] " + e.getPlayer().getDisplayName() + "§4에게서 BUTTON 획득이 시도됨.");
             e.getPlayer().getInventory().setItem(e.getSlot(), new ItemStack(Material.AIR));
         }
     }
