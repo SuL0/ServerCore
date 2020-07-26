@@ -46,7 +46,7 @@ public class InventoryItemListener implements Listener {
                             UniqueIdAPI.getUniqueID(clonedPreviousMainIs).equals(UniqueIdAPI.getUniqueID(newIs)))
                         return;
 
-                    Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedConsideringUIDEvent(p, clonedPreviousMainIs, newIs)); // EVENT: Call PlayerMainItemChangeEvent
+                    Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedConsideringUidEvent(p, clonedPreviousMainIs, newIs)); // EVENT: Call PlayerMainItemChangeEvent
                     mainItemOfPlayers.put(p, newIs);
                 }
             }
@@ -67,7 +67,7 @@ public class InventoryItemListener implements Listener {
         ItemStack newIs = p.getInventory().getItem(e.getNewSlot()) != null ? e.getPlayer().getInventory().getItem(e.getNewSlot()) : new ItemStack(Material.AIR);
         if (clonedPreviousIs.getType().equals(Material.AIR) && newIs.getType().equals(Material.AIR)) return;
 
-        Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedConsideringUIDEvent(p, clonedPreviousIs, newIs));
+        Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedConsideringUidEvent(p, clonedPreviousIs, newIs));
         mainItemOfPlayers.put(p, newIs);
     }
 
