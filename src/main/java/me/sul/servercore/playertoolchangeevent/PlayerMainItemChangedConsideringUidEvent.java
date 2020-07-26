@@ -12,19 +12,22 @@ public class PlayerMainItemChangedConsideringUidEvent extends Event { // 아이�
     private Player player;
     private ItemStack clonedPreviousItemStack;         // ! 정확하지 않을 수 있음 !
     private ItemStack newItemStack;
+    private int newSlot;
     private boolean isChangedToCrackShotWeapon;
 
 
-    public PlayerMainItemChangedConsideringUidEvent(Player player, ItemStack clonedPreviousItemStack, ItemStack newItemStack) {
+    public PlayerMainItemChangedConsideringUidEvent(Player player, ItemStack clonedPreviousItemStack, ItemStack newItemStack, int newSlot) {
         this.player = player;
         this.clonedPreviousItemStack = clonedPreviousItemStack;
         this.newItemStack = newItemStack;
+        this.newSlot = newSlot;
         isChangedToCrackShotWeapon = CrackShotAdditionAPI.isValidCrackShotWeapon(newItemStack);
     }
 
     public Player getPlayer() { return player; }
     public ItemStack getClonedPreviousItemStack() { return clonedPreviousItemStack; }
     public ItemStack getNewItemStack() { return newItemStack; }
+    public int getNewSlot() { return newSlot; }
     public boolean isChangedToCrackShotWeapon() { return isChangedToCrackShotWeapon; }
 
     @Override
