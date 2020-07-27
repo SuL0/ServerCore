@@ -20,9 +20,9 @@ public class InventoryItemListener implements Listener {
     HashMap<Player, ItemStack> mainItemOfPlayers = new HashMap<>();  // defaultContainer.addSlotListener() - a()에서 previousIs 얻을 방법이 없기때문.
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
-        mainItemOfPlayers.put(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand());
+//        mainItemOfPlayers.put(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand()); // 필요없음. 어차피 무기 들고 있었으면 a()가 바로 실행됨.
 
         EntityPlayer ep = ((CraftPlayer)e.getPlayer()).getHandle();
         ep.defaultContainer.addSlotListener(new ICrafting() {
@@ -69,7 +69,7 @@ public class InventoryItemListener implements Listener {
         mainItemOfPlayers.put(p, newIs);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent e) {
         mainItemOfPlayers.remove(e.getPlayer());
     }
