@@ -1,7 +1,7 @@
 package me.sul.servercore.inventorymodeling;
 
 import me.sul.servercore.ServerCore;
-import me.sul.servercore.playertoolchangeevent.InventoryItemChangedEvent;
+import me.sul.servercore.inventoryevent.InventoryItemChangedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -72,7 +72,9 @@ public class InventoryModeling implements Listener {
         invModelingRecipe.addIngredient(1, BUTTON2.getType());
         invModelingRecipe.addIngredient(1, BUTTON3.getType());
         invModelingRecipe.addIngredient(1, BUTTON4.getType());
-        Bukkit.addRecipe(invModelingRecipe);
+        if (Bukkit.getRecipesFor(inventoryModelingItem) == null && Bukkit.getRecipesFor(inventoryModelingItem).size() == 0) {
+            Bukkit.addRecipe(invModelingRecipe);
+        }
     }
 
     @EventHandler
