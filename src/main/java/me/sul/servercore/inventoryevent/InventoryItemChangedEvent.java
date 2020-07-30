@@ -1,4 +1,4 @@
-package me.sul.servercore.playertoolchangeevent;
+package me.sul.servercore.inventoryevent;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

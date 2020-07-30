@@ -72,7 +72,7 @@ public class InventoryModeling implements Listener {
         invModelingRecipe.addIngredient(1, BUTTON2.getType());
         invModelingRecipe.addIngredient(1, BUTTON3.getType());
         invModelingRecipe.addIngredient(1, BUTTON4.getType());
-        if (Bukkit.getRecipesFor(inventoryModelingItem) == null && Bukkit.getRecipesFor(inventoryModelingItem).size() == 0) {
+        if (Bukkit.getRecipesFor(inventoryModelingItem) == null || Bukkit.getRecipesFor(inventoryModelingItem).size() == 0) {
             Bukkit.addRecipe(invModelingRecipe);
         }
     }

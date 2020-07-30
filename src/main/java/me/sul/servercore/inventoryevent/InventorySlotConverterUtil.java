@@ -1,4 +1,4 @@
-package me.sul.servercore.playertoolchangeevent;
+package me.sul.servercore.inventoryevent;
 
 public class InventorySlotConverterUtil {
     public static int nmsSlotToSpigotSlot(int nmsSlot) {

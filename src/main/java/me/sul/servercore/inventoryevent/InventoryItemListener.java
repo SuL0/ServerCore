@@ -1,14 +1,18 @@
-package me.sul.servercore.playertoolchangeevent;
+package me.sul.servercore.inventoryevent;
 
+import me.sul.crackshotaddition.CrackShotAddition;
 import me.sul.servercore.serialnumber.UniqueIdAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -17,13 +21,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 public class InventoryItemListener implements Listener {
-    HashMap<Player, ItemStack> mainItemOfPlayers = new HashMap<>();  // defaultContainer.addSlotListener() - a()에서 previousIs 얻을 방법이 없기때문.
+    HashMap<Player, ItemStack> mainItemOfPlayers = new HashMap<>();
 
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
-//        mainItemOfPlayers.put(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand()); // 필요없음. 어차피 무기 들고 있었으면 a()가 바로 실행됨.
-
         EntityPlayer ep = ((CraftPlayer)e.getPlayer()).getHandle();
         ep.defaultContainer.addSlotListener(new ICrafting() {
             final Player p = e.getPlayer();
@@ -68,6 +70,51 @@ public class InventoryItemListener implements Listener {
         Bukkit.getPluginManager().callEvent(new PlayerMainItemChangedConsideringUidEvent(p, clonedPreviousIs, newIs, e.getNewSlot()));
         mainItemOfPlayers.put(p, newIs);
     }
+
+
+
+
+
+
+//    // ServerCore - InventoryListener 테스트 코드
+//    @EventHandler(priority = EventPriority.LOWEST)
+//    public void onInventoryOpen(InventoryOpenEvent e) {
+//        e.getInventory().setItem(0, new ItemStack(Material.GOLD_AXE));
+//        EntityPlayer ep = ((CraftPlayer)e.getPlayer()).getHandle();
+//        // 1틱 전의 변화는 감지를 못함
+//        Bukkit.getScheduler().runTaskLater(CrackShotAddition.getInstance(), () -> {
+//            Bukkit.getServer().broadcastMessage("getTopInventoryType: " + ep.activeContainer.getBukkitView().getTopInventory().getType());
+//            Bukkit.getServer().broadcastMessage("getBottomInventoryType: " + ep.activeContainer.getBukkitView().getBottomInventory().getType());
+//            ep.activeContainer.addSlotListener(new ICrafting() {
+//                @Override
+//                public void a(Container container, NonNullList<net.minecraft.server.v1_12_R1.ItemStack> nonNullList) {
+//
+//                }
+//
+//                @Override
+//                public void a(Container container, int nmsSlot, net.minecraft.server.v1_12_R1.ItemStack itemStack) {
+//                    Bukkit.getServer().broadcastMessage("§ca() - §f" + container.getBukkitView().getType());
+//                    Bukkit.getServer().broadcastMessage("  slot: " + nmsSlot);
+//                }
+//
+//                @Override
+//                public void setContainerData(Container container, int i, int i1) {
+//
+//                }
+//
+//                @Override
+//                public void setContainerData(Container container, IInventory iInventory) {
+//
+//                }
+//            });
+//        }, 1L);
+//    }
+//
+//    @EventHandler
+//    public void onInventoryClick(InventoryClickEvent e) {
+//        Bukkit.getServer().broadcastMessage("InventoryClickEvent: " + e.getSlot());
+//    }
+
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent e) {
