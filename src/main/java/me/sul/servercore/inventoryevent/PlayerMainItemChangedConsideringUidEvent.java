@@ -1,4 +1,4 @@
-package me.sul.servercore.playertoolchangeevent;
+package me.sul.servercore.inventoryevent;
 
 import me.sul.crackshotaddition.util.CrackShotAdditionAPI;
 import org.bukkit.entity.Player;

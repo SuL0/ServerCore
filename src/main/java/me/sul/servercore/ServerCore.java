@@ -7,7 +7,7 @@ import me.sul.servercore.freeze.FreezePlayer;
 import me.sul.servercore.freeze.FreezedPlayerListener;
 import me.sul.servercore.inventorymodeling.InventoryModeling;
 import me.sul.servercore.kickallbeforeserverstop.KickAllBeforeServerStop;
-import me.sul.servercore.playertoolchangeevent.InventoryItemListener;
+import me.sul.servercore.inventoryevent.InventoryItemListener;
 import me.sul.servercore.serialnumber.UniqueIdAPI;
 import me.sul.servercore.worldmanager.WorldManager;
 import org.bukkit.Bukkit;

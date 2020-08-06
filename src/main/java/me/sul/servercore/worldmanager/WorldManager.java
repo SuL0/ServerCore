@@ -3,8 +3,11 @@ package me.sul.servercore.worldmanager;
 import me.sul.servercore.ServerCore;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class WorldManager implements Listener {
@@ -36,5 +39,13 @@ public class WorldManager implements Listener {
         if (e.toWeatherState()) { // true if the weather is being set to raining, false otherwise
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onDeath(EntityDeathEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            e.getDrops().clear();
+        }
+        e.setDroppedExp(0);
     }
 }
