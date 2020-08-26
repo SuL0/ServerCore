@@ -1,5 +1,6 @@
 package me.sul.servercore;
 
+import me.sul.servercore.command.KillAllCommand;
 import me.sul.servercore.datasaveschedule.DataSaveCommand;
 import me.sul.servercore.datasaveschedule.DataSaveScheduleEvent;
 import me.sul.servercore.datasaveschedule.DataSaveScheduler;
@@ -33,6 +34,7 @@ public class ServerCore extends JavaPlugin implements Listener {
 		registerInventoryModeling();
 		registerKickAllBeforeServerStop();
 		registerTimeManager();
+		registerCommand();
 	}
 
 	private void registerDataSaveSchedule() {
@@ -55,7 +57,9 @@ public class ServerCore extends JavaPlugin implements Listener {
 	private void registerTimeManager() {
 		Bukkit.getPluginManager().registerEvents(new WorldManager(), this);
 	}
-
+	private void registerCommand() {
+		Bukkit.getPluginManager().registerEvents(new KillAllCommand(), this);
+	}
 	// 이거 제대로 되는지 모르겠네.
 	// onDisable() 실행되고 나서 event가 1틱 뒤에 받아질 수도 있음.
 	// TODO) 이벤트가 제때 받아지는지 확인할 필요가 있음.
