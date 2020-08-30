@@ -36,7 +36,10 @@ public class KillAllCommand implements Listener {
             p.sendMessage("§c§lKILLALL: " + "§f엔티티 §e" + removed + "§f마리를 제거하였습니다.");
         }
     }
-    private void printHelpMessage(Player p) { p.sendMessage("§c§lKILLALL: §f/killall <all|named|drops|xp|mobs> [radius]"); }
+    private void printHelpMessage(Player p) {
+        p.sendMessage("");
+        p.sendMessage("§c§lKILLALL: §f/killall <all|named|drops|xp|mobs> [radius]");
+    }
 
 
     private int removeEntities(World world, Player p, RemoveType removeType, int radius) {
