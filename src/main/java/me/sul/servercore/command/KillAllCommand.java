@@ -1,6 +1,8 @@
 package me.sul.servercore.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +15,7 @@ public class KillAllCommand implements Listener {
     // /<command> <all|named|drops|xp|mobs> [radius]
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         Player p = e.getPlayer();
-        String args[] = e.getMessage().split(" ");
+        String[] args = e.getMessage().split(" ");
         String arg0 = args[0].toLowerCase();
         if (arg0.equals("/killall") || arg0.equals("/ekillall") || arg0.equals("/remove") || arg0.equals("/eremove") || arg0.equals("/butcher") || arg0.equals("/ebutcher") || arg0.equals("/mobkill") || arg0.equals("/emobkill")) {
             e.setCancelled(true);
@@ -33,7 +35,7 @@ public class KillAllCommand implements Listener {
             }
 
             int removed = removeEntities(p.getWorld(), p, removeType, radius);
-            p.sendMessage("§c§lKILLALL: " + "§f엔티티 §e" + removed + "§f마리를 제거하였습니다.");
+            p.sendMessage("§c§lKILLALL: " + "§f엔티티 §e" + removed + "§f마리를 제거하였습니다. §7[" + removeType + "§7]");
         }
     }
     private void printHelpMessage(Player p) {
