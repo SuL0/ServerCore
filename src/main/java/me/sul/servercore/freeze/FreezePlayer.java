@@ -11,15 +11,15 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class FreezePlayer {
-	private ArrayList<UUID> freezedPlayerList = new ArrayList<UUID>();
+	private final ArrayList<UUID> freezedPlayerList = new ArrayList<UUID>();
 	
-	public FreezePlayer FreezePlayer() {
+	public FreezePlayer getFreezePlayer() {
 		return this;
 	}
 
 	public void setFreeze(Player p, boolean b) {
 		UUID pUUID = p.getUniqueId();
-		if (b==true) {
+		if (b) {
 			if (!freezedPlayerList.contains(pUUID)) {
 				freezedPlayerList.add(pUUID);
 			}

@@ -10,7 +10,6 @@ import me.sul.servercore.inventorymodeling.InventoryModeling;
 import me.sul.servercore.kickallbeforeserverstop.KickAllBeforeServerStop;
 import me.sul.servercore.inventoryevent.InventoryItemListener;
 import me.sul.servercore.serialnumber.UniqueIdAPI;
-import me.sul.servercore.worldmanager.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -33,7 +32,6 @@ public class ServerCore extends JavaPlugin implements Listener {
 		registerSerialNumber();
 		registerInventoryModeling();
 		registerKickAllBeforeServerStop();
-		registerTimeManager();
 		registerCommand();
 	}
 
@@ -53,9 +51,6 @@ public class ServerCore extends JavaPlugin implements Listener {
 	}
 	private void registerKickAllBeforeServerStop() {
 		Bukkit.getPluginManager().registerEvents(new KickAllBeforeServerStop(), this);
-	}
-	private void registerTimeManager() {
-		Bukkit.getPluginManager().registerEvents(new WorldManager(), this);
 	}
 	private void registerCommand() {
 		Bukkit.getPluginManager().registerEvents(new KillAllCommand(), this);

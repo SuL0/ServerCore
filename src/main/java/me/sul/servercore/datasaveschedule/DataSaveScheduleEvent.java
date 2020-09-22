@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 public class DataSaveScheduleEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled = false;
-	private boolean serverIsDisabling;
+	private final boolean serverIsDisabling;
 	
 	public DataSaveScheduleEvent(boolean serverIsDisabling) {
 		this.serverIsDisabling = serverIsDisabling;

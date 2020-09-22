@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 public class PlayerUnfreezeEvent extends Event implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
-	private Player p;
+	private final Player p;
 	
 	public PlayerUnfreezeEvent(Player p) {
 		this.p = p;

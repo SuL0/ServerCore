@@ -28,7 +28,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
 public class FreezedPlayerListener implements Listener {
-	private FreezePlayer freezePlayer;
+	private final FreezePlayer freezePlayer;
 
 	public FreezedPlayerListener() {
 		freezePlayer = ServerCore.getFreezePlayer();

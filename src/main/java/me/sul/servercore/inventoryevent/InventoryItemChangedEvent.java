@@ -8,9 +8,9 @@ import org.bukkit.inventory.ItemStack;
 // NOTE: 인벤토리 36칸 안에 있는 어떠한 아이템이든 변화가 있을 때 호출되는 이벤트
 public class InventoryItemChangedEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
-    private Player player;
-    private int slot;
-    private ItemStack is;
+    private final Player player;
+    private final int slot;
+    private final ItemStack is;
 
 
     public InventoryItemChangedEvent(Player player, int slot, ItemStack is) {
