@@ -24,9 +24,6 @@ dependencies {
 
 tasks.compileJava.get().options.encoding = "UTF-8"
 
-val shade = configurations.create("shade")
-shade.extendsFrom(configurations.implementation.get())
-
 val fatJar = task("fatJar", type = Jar::class) {
     archiveFileName.set("${project.name}_S.jar")
     destinationDirectory.set(file("C:/Users/PHR/Desktop/PluginStorage"))

@@ -51,14 +51,6 @@ class Book {
             }
     }
 
-    //    public void openBook(Player player, ItemStack book) {       // 플레이어에게 책을 주는 과정이 무조건 있어야함
-    //        int slot = player.getInventory().getHeldItemSlot();
-    //        ItemStack old = player.getInventory().getItem(slot);
-    //        player.getInventory().setItem(slot, book);
-    ////        player.openBook(player.getInventory().getItem(slot));
-    //
-    //        player.getInventory().setItem(slot, old);
-    //    }
     fun openBook(p: Player, book: ItemStack?) {       // 플레이어에게 책을 주는 과정이 무조건 있어야함
         val slot = p.inventory.heldItemSlot
         val old = p.inventory.getItem(slot)
