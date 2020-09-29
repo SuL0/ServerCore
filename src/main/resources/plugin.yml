@@ -1,5 +1,5 @@
 name: ServerCore
-version: 2.6.4
+version: 1.0-SNAPSHOT
 api-version: 1.12
 main: kr.sul.servercore.ServerCore
 author: SuL

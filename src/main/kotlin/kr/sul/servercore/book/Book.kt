@@ -20,7 +20,7 @@ class Book {
     private val pm = ProtocolLibrary.getProtocolManager()
 
     companion object {
-        val exampleBook: ItemStack?
+        val exampleBook: ItemStack
             get() {
                 try {
                     val book = ItemStack(Material.WRITTEN_BOOK)
@@ -47,7 +47,7 @@ class Book {
                 } catch (ex: IllegalAccessException) {
                     Logger.getLogger(Book::class.java.name).log(Level.SEVERE, null, ex)
                 }
-                return null
+                throw Exception()
             }
     }
 

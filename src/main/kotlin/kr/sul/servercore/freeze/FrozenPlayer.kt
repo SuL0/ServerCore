@@ -45,8 +45,8 @@ object FrozenPlayer {
             return playerList
         }
 
-    fun getOnlinePlayersExceptFrozen(worlds: String): List<Player> {
-        var worlds = worlds
+    fun getOnlinePlayersExceptFrozen(worldsParam: String): List<Player> {
+        var worlds = worldsParam
         val playerList = ServerCore.instance.server.onlinePlayers.toMutableList()
         for (i in playerList.indices) {
             if (getPlayerIsFrozen(playerList[i])) {

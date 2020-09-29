@@ -18,7 +18,7 @@ object DataSaveCommand : CommandExecutor {
         }
         ServerCore.instance.server.pluginManager.callEvent(DataSaveScheduleEvent(false))
         ServerCore.instance.logger.log(Level.INFO, "서버 데이터 즉시 저장")
-        (commandSender as? Player)?.sendMessage(ChatAPI.format("&c&lSERVER: &f서버 데이터를 저장하였습니다."))
+        (commandSender as? Player)?.sendMessage("§c§lSERVER: §f서버 데이터를 저장하였습니다.")
         return true
     }
 }

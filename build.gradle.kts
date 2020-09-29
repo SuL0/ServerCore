@@ -12,24 +12,25 @@ repositories {
     mavenLocal()
 }
 
+val pluginStorage = "C:/Users/PHR/Desktop/PluginStorage"
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     compileOnly("com.destroystokyo.paper", "paper-api", "1.12.2-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc", "spigot", "1.12.2-R0.1-SNAPSHOT")
+
     compileOnly("com.comphenix.protocol", "ProtocolLib", "4.5.1")
-    compileOnly(files("C:/Users/PHR/Desktop/PluginStorage/NotFat/CrackShotAddition_S-NotFat.jar"))
-    compileOnly(files("C:/Users/PHR/Desktop/PluginStorage/Dependencies/item-nbt-api-plugin-2.5.0.jar"))
+    compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
+    compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.5.0.jar"))
 }
 
 
-tasks.compileJava.get().options.encoding = "UTF-8"
-
 tasks {
+    compileJava.get().options.encoding = "UTF-8"
     compileKotlin.get().kotlinOptions.jvmTarget = "1.8"
     compileTestKotlin.get().kotlinOptions.jvmTarget = "1.8"
 
     jar {
         archiveFileName.set("${project.name}_S.jar")
-        destinationDirectory.set(file("C:/Users/PHR/Desktop/PluginStorage"))
+        destinationDirectory.set(file(pluginStorage))
     }
 }

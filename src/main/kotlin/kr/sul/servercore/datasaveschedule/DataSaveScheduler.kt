@@ -11,7 +11,7 @@ object DataSaveScheduler {
         object : BukkitRunnable() {
             override fun run() {
                 ServerCore.instance.server.pluginManager.callEvent(DataSaveScheduleEvent(false))
-                ServerCore.instance.logger.log(Level.INFO, "서버 저장시간 : " + SAVE_INTERVAL + "m")
+                ServerCore.instance.logger.log(Level.INFO, "서버 저장시간 : ${SAVE_INTERVAL}m")
             }
         }.runTaskTimer(ServerCore.instance, SAVE_INTERVAL * 1200L, SAVE_INTERVAL * 1200L)
     }
