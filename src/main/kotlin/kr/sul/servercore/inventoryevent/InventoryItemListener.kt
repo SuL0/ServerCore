@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack
 import java.util.*
 
 object InventoryItemListener : Listener {
-    var clonedMainItemOfPlayers = HashMap<Player, ItemStack>()
+    var clonedHeldItemOfPlayers = HashMap<Player, ItemStack>()
 
     @EventHandler(priority = EventPriority.LOWEST)
     fun onJoin(e: PlayerJoinEvent) {
@@ -27,23 +27,30 @@ object InventoryItemListener : Listener {
         ep.defaultContainer.addSlotListener(object : ICrafting {
             val p = e.player
             override fun a(container: Container, nonNullList: NonNullList<net.minecraft.server.v1_12_R1.ItemStack>) {}
+            override fun setContainerData(container: Container, i: Int, i1: Int) {}
+            override fun setContainerData(container: Container, iInventory: IInventory) {}
+
             override fun a(container: Container, nmsSlot: Int, nmsIs: net.minecraft.server.v1_12_R1.ItemStack) {
                 val newSlot = InventorySlotConverterUtil.nmsSlotToSpigotSlot(nmsSlot)
                 val newIs = if (p.inventory.getItem(newSlot) != null) p.inventory.getItem(newSlot) else ItemStack(Material.AIR)
 
-                // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때. 아이템 정보 바뀌는건 제외(UID 비교. 없다면 그냥 계속 중복되게 호출됨)
+                // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때. 아이템 정보 바뀌는건 제외(UID 비교. UID가 없다면 중복되게 호출될 수 있음)
                 if (newSlot == p.inventory.heldItemSlot) {
-                    val clonedPreviousMainIs = clonedMainItemOfPlayers[p] ?: ItemStack(Material.AIR)
-                    if (!(UniqueIdAPI.hasUniqueID(clonedPreviousMainIs) && UniqueIdAPI.hasUniqueID(newIs) && UniqueIdAPI.getUniqueID(clonedPreviousMainIs) == UniqueIdAPI.getUniqueID(newIs))) {
-                        Bukkit.getPluginManager().callEvent(PlayerMainItemChangedConsideringUidEvent(p, clonedPreviousMainIs, newIs, newSlot)) // EVENT: Call PlayerMainItemChangeEvent
-                        clonedMainItemOfPlayers[p] = newIs.clone()
-                    }
-                }
-                Bukkit.getPluginManager().callEvent(InventoryItemChangedEvent(p, newSlot, newIs)) // EVENT: Call InventoryItemChangedEvent
-            }
+                    val clonedPreviousMainIs = clonedHeldItemOfPlayers[p] ?: ItemStack(Material.AIR)
+                    val bHeldItemIsChangedToOnother = !(UniqueIdAPI.hasUniqueID(clonedPreviousMainIs) && UniqueIdAPI.hasUniqueID(newIs)
+                                                                && UniqueIdAPI.getUniqueID(clonedPreviousMainIs) == UniqueIdAPI.getUniqueID(newIs))
+                    // true: 이전 아이템과 UID가 중복이 되지 않음(=다른 아이템으로 바꼈을 때) / UID가 없는 경우
 
-            override fun setContainerData(container: Container, i: Int, i1: Int) {}
-            override fun setContainerData(container: Container, iInventory: IInventory) {}
+                    if (bHeldItemIsChangedToOnother) {
+                        Bukkit.getPluginManager().callEvent(PlayerHeldItemIsChangedToOnotherEvent(p, clonedPreviousMainIs, newIs, newSlot)) // EVENT: Call PlayerHeldItemChangeEvent
+                        clonedHeldItemOfPlayers[p] = newIs.clone()
+
+                        Bukkit.getPluginManager().callEvent(InventoryItemChangedEvent(p, newSlot, newIs)) // EVENT: Call InventoryItemChangedEvent
+                    }
+                } else {
+                    Bukkit.getPluginManager().callEvent(InventoryItemChangedEvent(p, newSlot, newIs)) // EVENT: Call InventoryItemChangedEvent
+                }
+            }
         })
     }
 
@@ -54,12 +61,11 @@ object InventoryItemListener : Listener {
         val clonedPreviousIs = e.player.inventory.getItem(e.previousSlot)?.clone() ?: ItemStack(Material.AIR) // clone()은 일부러 a()에서 PreviousItem ItemMeta 수정 못하는걸 동일시 하기 위해서 넣었음.
         val newIs = if (p.inventory.getItem(e.newSlot) != null) e.player.inventory.getItem(e.newSlot) else ItemStack(Material.AIR)
         if (clonedPreviousIs.type == Material.AIR && newIs.type == Material.AIR) return
-        Bukkit.getPluginManager().callEvent(PlayerMainItemChangedConsideringUidEvent(p, clonedPreviousIs, newIs, e.newSlot))
-        clonedMainItemOfPlayers[p] = newIs.clone() // NOTE: 씨발 Drop이벤트가 취소되든 말든간에 ItemStack이 AIR로 바뀌는 버그때문에 .clone해서 저장해야 함.
-        // NOTE: 근데 어차피 상관없는게, 정상적으로 아이템이 바꼈으면 이벤트에 걸려서 수정되게 돼있음.
+        Bukkit.getPluginManager().callEvent(PlayerHeldItemIsChangedToOnotherEvent(p, clonedPreviousIs, newIs, e.newSlot))
+        clonedHeldItemOfPlayers[p] = newIs.clone() // NOTE: Drop이벤트가 취소되던 말던간에 버킷이 일단 ItemStack을 AIR로 바꿔서, .clone해서 저장해야 함.
     }
 
-    //    // ServerCore - InventoryListener 테스트 코드
+    //    // ServerCore - InventoryListene 테스트 코드 (= GUI가 열린 상태에서의 아이템 변화 감지)
     //    @EventHandler(priority = EventPriority.LOWEST)
     //    public void onInventoryOpen(InventoryOpenEvent e) {
     //        e.getInventory().setItem(0, new ItemStack(Material.GOLD_AXE));
@@ -97,8 +103,9 @@ object InventoryItemListener : Listener {
     //    public void onInventoryClick(InventoryClickEvent e) {
     //        Bukkit.getServer().broadcastMessage("InventoryClickEvent: " + e.getSlot());
     //    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onQuit(e: PlayerQuitEvent) {
-        clonedMainItemOfPlayers.remove(e.player)
+        clonedHeldItemOfPlayers.remove(e.player)
     }
 }
