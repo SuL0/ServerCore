@@ -136,7 +136,7 @@ object InventoryModeling : Listener {
 
     @EventHandler
     fun preventToObtainButton(e: InventoryItemChangedEvent) {
-        val item = e.itemStack
+        val item = e.newItemStack
         if (item.isSimilar(BUTTON1) || item.isSimilar(BUTTON2) || item.isSimilar(BUTTON3) || item.isSimilar(BUTTON4) || item.isSimilar(INVENTORY_MODELING_ITEM)) {
             // TODO: 아이템 획득 취소 로그 추가
             for (p in Bukkit.getServer().onlinePlayers) {
