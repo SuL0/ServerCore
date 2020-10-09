@@ -11,7 +11,7 @@ object KickAllBeforeServerStop : Listener {
 
     @EventHandler
     fun onPlayerSayStop(e: PlayerCommandPreprocessEvent) {
-        if (!e.player.isOp) return
+        if (!e.player.isOp || e.isCancelled) return
         if (e.message.equals("/stop", true)) {
             e.isCancelled = true
             for (p in Bukkit.getServer().onlinePlayers) {
@@ -23,6 +23,7 @@ object KickAllBeforeServerStop : Listener {
 
     @EventHandler
     fun onConsoleSayStop(e: ServerCommandEvent) {
+        if (e.isCancelled) return
         if (e.command.equals("stop", true)) {
             e.isCancelled = true
             for (p in Bukkit.getServer().onlinePlayers) {

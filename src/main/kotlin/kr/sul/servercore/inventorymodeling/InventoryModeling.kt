@@ -7,6 +7,7 @@ import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -95,7 +96,7 @@ object InventoryModeling : Listener {
         addButtonToCraftingTable(e.player)
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     fun onClick(e: InventoryClickEvent) {
         val view = e.view
         if (isPlayerCraftingInv(view) && e.clickedInventory !== e.whoClicked.inventory) { // 크래프팅 테이블 클릭시, 좌: container.crafting, 우: container.inventory
@@ -119,7 +120,7 @@ object InventoryModeling : Listener {
      버그 방지
     */
     // FIXME: 플레이어가 정상적으로 나가지 않고, '현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.'(인터넷/크래시?) 로 나가게 될 경우 아이템을 드랍하게됨.
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     fun removeButtonTryingToDrop(e: ItemSpawnEvent) {
         val item = e.entity.itemStack
         if (item.isSimilar(BUTTON1) || item.isSimilar(BUTTON2) || item.isSimilar(BUTTON3) || item.isSimilar(BUTTON4) || item.isSimilar(INVENTORY_MODELING_ITEM)) {
@@ -134,7 +135,7 @@ object InventoryModeling : Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     fun preventToObtainButton(e: InventoryItemChangedEvent) {
         val item = e.newItemStack
         if (item.isSimilar(BUTTON1) || item.isSimilar(BUTTON2) || item.isSimilar(BUTTON3) || item.isSimilar(BUTTON4) || item.isSimilar(INVENTORY_MODELING_ITEM)) {
