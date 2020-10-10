@@ -77,7 +77,7 @@ object InventoryModeling : Listener {
         Bukkit.getScheduler().runTaskLater(ServerCore.instance, { addButtonToCraftingTable(e.player) }, 1L)
     }
 
-    // NOTE: 인벤을 여는건 감지가 안되는데, 닫는건 감지가 됨.
+    // 인벤을 여는건 감지 방법이 없는데, 닫는건 감지가 가능함.
     @EventHandler
     fun onClose(e: InventoryCloseEvent) {
         val p = e.player as Player
@@ -124,7 +124,6 @@ object InventoryModeling : Listener {
     fun removeButtonTryingToDrop(e: ItemSpawnEvent) {
         val item = e.entity.itemStack
         if (item.isSimilar(BUTTON1) || item.isSimilar(BUTTON2) || item.isSimilar(BUTTON3) || item.isSimilar(BUTTON4) || item.isSimilar(INVENTORY_MODELING_ITEM)) {
-            // TODO: 아이템 스폰 취소 로그 추가
             for (p in Bukkit.getServer().onlinePlayers) {
                 if (p.isOp) {
                     p.sendMessage("§4[심각] BUTTON 드랍이 시도됨.")
@@ -139,7 +138,6 @@ object InventoryModeling : Listener {
     fun preventToObtainButton(e: InventoryItemChangedEvent) {
         val item = e.newItemStack
         if (item.isSimilar(BUTTON1) || item.isSimilar(BUTTON2) || item.isSimilar(BUTTON3) || item.isSimilar(BUTTON4) || item.isSimilar(INVENTORY_MODELING_ITEM)) {
-            // TODO: 아이템 획득 취소 로그 추가
             for (p in Bukkit.getServer().onlinePlayers) {
                 if (p.isOp) {
                     p.sendMessage("§4${e.player.displayName} §4에게서 BUTTON 획득이 시도됨.")
@@ -147,6 +145,7 @@ object InventoryModeling : Listener {
             }
             Bukkit.getServer().logger.log(Level.WARNING, "§4${e.player.displayName} §4에게서 BUTTON 획득이 시도됨.")
             e.player.inventory.setItem(e.slot, ItemStack(Material.AIR))
+            // TODO: e.newItemStack은 AIR인가? AIR로 변했으면 상관없는데, 아니라면 좀 문제 아닌가? 아이템 바꼇다고 이벤트 호출됐는데, 정작 그 아이템이 없으니.
         }
     }
 

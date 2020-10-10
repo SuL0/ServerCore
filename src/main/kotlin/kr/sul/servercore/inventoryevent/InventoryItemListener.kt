@@ -48,6 +48,7 @@ object InventoryItemListener : Listener {
                         Bukkit.getPluginManager().callEvent(InventoryItemChangedEvent(p, newSlot, newIs)) // EVENT: Call InventoryItemChangedEvent
                     }
                 } else {
+                    if (newSlot in 41..45) return  // 인벤토리 닫을 때 41~45가 계속 AIR로 바뀜. 그리고 걍 조합칸은 필요없음.
                     Bukkit.getPluginManager().callEvent(InventoryItemChangedEvent(p, newSlot, newIs)) // EVENT: Call InventoryItemChangedEvent
                 }
             }
