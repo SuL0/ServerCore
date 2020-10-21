@@ -1,5 +1,6 @@
 package kr.sul.servercore.inventoryevent
 
+import kr.sul.servercore.util.InventorySlotConverterUtil
 import kr.sul.servercore.util.UniqueIdAPI
 import net.minecraft.server.v1_12_R1.Container
 import net.minecraft.server.v1_12_R1.ICrafting
