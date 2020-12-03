@@ -12,3 +12,5 @@ description: "Core Plugin"
 commands:
   서버저장:
     description: save server
+  nbtview:
+    description: 아이템의 특정 NBT 값을 확인합니다.

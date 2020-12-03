@@ -1,6 +1,7 @@
 package kr.sul.servercore
 
 import kr.sul.servercore.command.KillAllCommand
+import kr.sul.servercore.command.NbtViewCommand
 import kr.sul.servercore.datasaveschedule.DataSaveCommand
 import kr.sul.servercore.datasaveschedule.DataSaveScheduleEvent
 import kr.sul.servercore.datasaveschedule.DataSaveScheduler
@@ -36,6 +37,7 @@ class ServerCore : JavaPlugin() {
     private fun registerDataSaveSchedule() {
         ObjectInitializer.forceInit(DataSaveScheduler::class.java)
         getCommand("서버저장").executor = DataSaveCommand
+        getCommand("nbtview").executor = NbtViewCommand
     }
 
     // 이거 제대로 되는지 모르겠네.
