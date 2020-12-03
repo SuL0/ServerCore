@@ -1,4 +1,4 @@
-package kr.sul.servercore.inventorymodeling
+package kr.sul.servercore.something
 
 import kr.sul.servercore.ServerCore
 import kr.sul.servercore.inventoryevent.InventoryItemChangedEvent

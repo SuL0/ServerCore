@@ -1,4 +1,4 @@
-package kr.sul.servercore.book
+package kr.sul.servercore.something
 
 import com.comphenix.protocol.ProtocolLibrary
 import io.netty.buffer.Unpooled

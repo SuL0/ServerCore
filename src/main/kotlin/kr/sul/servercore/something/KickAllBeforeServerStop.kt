@@ -1,4 +1,4 @@
-package kr.sul.servercore.kickallbeforeserverstop
+package kr.sul.servercore.something
 
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler

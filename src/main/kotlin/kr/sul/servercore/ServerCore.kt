@@ -8,8 +8,8 @@ import kr.sul.servercore.datasaveschedule.DataSaveScheduler
 import kr.sul.servercore.freeze.FrozenPlayer
 import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
-import kr.sul.servercore.inventorymodeling.InventoryModeling
-import kr.sul.servercore.kickallbeforeserverstop.KickAllBeforeServerStop
+import kr.sul.servercore.something.InventoryModeling
+import kr.sul.servercore.something.KickAllBeforeServerStop
 import kr.sul.servercore.util.ObjectInitializer
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
