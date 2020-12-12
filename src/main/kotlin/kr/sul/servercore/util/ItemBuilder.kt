@@ -12,19 +12,19 @@ import java.util.*
 import java.util.function.Consumer
 
 object ItemBuilder {
-    fun ItemStack.amount(amount: Int): ItemStack {
+    fun ItemStack.amountIB(amount: Int): ItemStack {
         setAmount(amount)
         return this
     }
 
-    fun ItemStack.name(name: String): ItemStack {
+    fun ItemStack.nameIB(name: String): ItemStack {
         val meta = itemMeta
         meta.displayName = name.c()
         itemMeta = meta
         return this
     }
 
-    fun ItemStack.lore(text: String): ItemStack {
+    fun ItemStack.loreIB(text: String): ItemStack {
         val meta = itemMeta
         var lore: MutableList<String>? = meta.lore
         if (lore == null) lore = ArrayList()
@@ -34,54 +34,54 @@ object ItemBuilder {
         return this
     }
 
-    fun ItemStack.lore(vararg text: String): ItemStack {
-        Arrays.stream(text).forEach { this.lore(it) }
+    fun ItemStack.loreIB(vararg text: String): ItemStack {
+        Arrays.stream(text).forEach { this.loreIB(it) }
         return this
     }
 
-    fun ItemStack.lore(text: List<String>): ItemStack {
-        text.forEach { this.lore(it) }
+    fun ItemStack.loreIB(text: List<String>): ItemStack {
+        text.forEach { this.loreIB(it) }
         return this
     }
 
-    fun ItemStack.durability(durability: Int): ItemStack {
+    fun ItemStack.durabilityIB(durability: Int): ItemStack {
         setDurability(durability.toShort())
         return this
     }
 
-    fun ItemStack.data(data: Int): ItemStack {
+    fun ItemStack.dataIB(data: Int): ItemStack {
         setData(MaterialData(type, data.toByte()))
         return this
     }
 
-    fun ItemStack.enchantment(enchantment: Enchantment, level: Int): ItemStack {
+    fun ItemStack.enchantmentIB(enchantment: Enchantment, level: Int): ItemStack {
         addUnsafeEnchantment(enchantment, level)
         return this
     }
 
-    fun ItemStack.enchantment(enchantment: Enchantment): ItemStack {
+    fun ItemStack.enchantmentIB(enchantment: Enchantment): ItemStack {
         addUnsafeEnchantment(enchantment, 1)
         return this
     }
 
-    fun ItemStack.type(material: Material): ItemStack {
+    fun ItemStack.typeIB(material: Material): ItemStack {
         type = material
         return this
     }
 
-    fun ItemStack.clearLore(): ItemStack {
+    fun ItemStack.clearLoreIB(): ItemStack {
         val meta = itemMeta
         meta.lore = ArrayList()
         itemMeta = meta
         return this
     }
 
-    fun ItemStack.clearEnchantments(): ItemStack {
+    fun ItemStack.clearEnchantmentsIB(): ItemStack {
         enchantments.keys.forEach(Consumer<Enchantment> { this.removeEnchantment(it) })
         return this
     }
 
-    fun ItemStack.color(color: Color): ItemStack {
+    fun ItemStack.colorIB(color: Color): ItemStack {
         if (type == Material.LEATHER_BOOTS
                 || type == Material.LEATHER_CHESTPLATE
                 || type == Material.LEATHER_HELMET
@@ -96,7 +96,7 @@ object ItemBuilder {
         }
     }
 
-    fun ItemStack.flag(vararg flag: ItemFlag): ItemStack {
+    fun ItemStack.flagIB(vararg flag: ItemFlag): ItemStack {
         val meta = itemMeta
         meta.addItemFlags(*flag)
         itemMeta = meta
