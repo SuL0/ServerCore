@@ -2,6 +2,7 @@ package kr.sul.servercore.util
 
 import de.tr7zw.nbtapi.NBTItem
 import org.bukkit.Material
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
@@ -19,8 +20,9 @@ object UniqueIdAPI {
     @JvmStatic
     fun hasUniqueID(item: ItemStack): Boolean {
         if (item.type == Material.AIR) return false
-        val nbti = NBTItem(item)
-        return nbti.hasKey(UNIQUE_ID_KEY)
+        val nmsItem = CraftItemStack.asNMSCopy(item)
+        val tag = if (nmsItem.hasTag()) nmsItem.tag!! else return false
+        return tag.hasKey(UNIQUE_ID_KEY)
     }
 
     @JvmStatic
