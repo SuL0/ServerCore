@@ -32,7 +32,7 @@ class Book {
                     msg.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder("HI").create())
                     val msg2 = TextComponent("§l§aClick me to go to spawn")
                     msg2.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/spawn")
-                    val page = IChatBaseComponent.ChatSerializer.a(ComponentSerializer.toString(*arrayOf<BaseComponent>(text, msg, msg2)))
+                    val page = IChatBaseComponent.ChatSerializer.a(ComponentSerializer.toString(text, msg, msg2))
                     pages.add(page)
                     meta.title = "Example"
                     meta.author = "Optics Server"

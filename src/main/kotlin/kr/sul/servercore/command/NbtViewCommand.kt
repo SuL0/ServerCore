@@ -22,11 +22,11 @@ object NbtViewCommand : CommandExecutor {
             return true
         }
         val nbtItem = NBTItem(p.inventory.itemInMainHand)
-        for (nbtKey in args) {
-            var modifiedNbtKey = nbtKey.replace(",", "");
-            modifiedNbtKey = modifiedNbtKey.replace(" ", "")
-            if (modifiedNbtKey != "") {
-                printNbtValue(p, nbtItem, modifiedNbtKey)
+        for (t in args) {
+            var nbtKey = t.replace(",", "");
+            nbtKey = nbtKey.replace(" ", "")
+            if (nbtKey != "") {
+                printNbtValue(p, nbtItem, nbtKey)
             }
         }
         return true
