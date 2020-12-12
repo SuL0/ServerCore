@@ -1,8 +1,7 @@
 package kr.sul.servercore.util
 
-import de.tr7zw.nbtapi.NBTItem
+import kr.sul.servercore.nbtapi.NbtItem
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
@@ -12,22 +11,22 @@ object UniqueIdAPI {
     @JvmStatic
     fun carveUniqueID(item: ItemStack) {
         if (hasUniqueID(item)) throw Exception()
-        val nbti = NBTItem(item)
-        nbti.setString(UNIQUE_ID_KEY, UUID.randomUUID().toString())
-        item.itemMeta = nbti.item.itemMeta
+        val nbti = NbtItem(item)
+        nbti.tag.setString(UNIQUE_ID_KEY, UUID.randomUUID().toString())
+        nbti.applyToOriginal()
     }
 
     @JvmStatic
     fun hasUniqueID(item: ItemStack): Boolean {
         if (item.type == Material.AIR) return false
-        val nmsItem = CraftItemStack.asNMSCopy(item)
-        val tag = if (nmsItem.hasTag()) nmsItem.tag!! else return false
-        return tag.hasKey(UNIQUE_ID_KEY)
+        val nbti = NbtItem(item)
+        return nbti.tag.hasKey(UNIQUE_ID_KEY)
     }
 
     @JvmStatic
     fun getUniqueID(item: ItemStack): String {
-        val nbti = NBTItem(item)
-        return nbti.getString(UNIQUE_ID_KEY) ?: throw Exception()
+        val nbti = NbtItem(item)
+        if (!nbti.tag.hasKey(UNIQUE_ID_KEY)) throw Exception()
+        return nbti.tag.getString(UNIQUE_ID_KEY)
     }
 }
