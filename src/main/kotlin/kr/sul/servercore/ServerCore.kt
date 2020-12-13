@@ -20,7 +20,7 @@ import java.util.logging.Level
 
 class ServerCore : JavaPlugin() {
     companion object {
-        lateinit var plugin: Plugin private set
+        internal lateinit var plugin: Plugin private set
         lateinit var instance: ServerCore private set
         val frozenPlayer = FrozenPlayer
     }
