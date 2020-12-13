@@ -12,6 +12,7 @@ import kr.sul.servercore.something.InventoryModeling
 import kr.sul.servercore.something.KickAllBeforeServerStop
 import kr.sul.servercore.something.TakeAwayPermissionIfNotOp
 import kr.sul.servercore.util.ObjectInitializer
+import kr.sul.servercore.util.UptimeBasedOnTick
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
@@ -38,6 +39,7 @@ class ServerCore : JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(KickAllBeforeServerStop, this)
         Bukkit.getPluginManager().registerEvents(KillAllCommand, this)
         Bukkit.getPluginManager().registerEvents(TakeAwayPermissionIfNotOp, this)
+        ObjectInitializer.forceInit(UptimeBasedOnTick::class.java)
     }
     private fun registerDataSaveSchedule() {
         ObjectInitializer.forceInit(DataSaveScheduler::class.java)

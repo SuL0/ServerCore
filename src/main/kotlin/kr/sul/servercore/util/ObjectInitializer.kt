@@ -2,7 +2,7 @@ package kr.sul.servercore.util
 
 object ObjectInitializer {
     @JvmStatic
-    fun <T> forceInit(clazz: Class<T>): Class<T>? {
+    fun <T> forceInit(clazz: Class<T>): Class<T> {
         try {
             Class.forName(clazz.name, true, clazz.classLoader)
         } catch (e: ClassNotFoundException) {
