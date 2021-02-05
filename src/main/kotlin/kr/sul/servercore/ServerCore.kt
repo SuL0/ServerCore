@@ -8,7 +8,6 @@ import kr.sul.servercore.datasaveschedule.DataSaveScheduler
 import kr.sul.servercore.freeze.FrozenPlayer
 import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
-import kr.sul.servercore.something.InventoryModeling
 import kr.sul.servercore.something.KickAllBeforeServerStop
 import kr.sul.servercore.something.TakeAwayPermissionIfNotOp
 import kr.sul.servercore.util.ObjectInitializer
@@ -35,7 +34,6 @@ class ServerCore : JavaPlugin() {
         registerDataSaveSchedule()
         Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
-        Bukkit.getPluginManager().registerEvents(InventoryModeling, this)
         Bukkit.getPluginManager().registerEvents(KickAllBeforeServerStop, this)
         Bukkit.getPluginManager().registerEvents(KillAllCommand, this)
         Bukkit.getPluginManager().registerEvents(TakeAwayPermissionIfNotOp, this)
