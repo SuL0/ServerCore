@@ -103,6 +103,13 @@ object ItemBuilder {
         return this
     }
 
+    fun ItemStack.unbreakableIB(b: Boolean): ItemStack {
+        val meta = itemMeta
+        meta.isUnbreakable = b
+        itemMeta = meta
+        return this
+    }
+
     private fun String.c(): String {
         return ChatColor.translateAlternateColorCodes('&', this)
     }
