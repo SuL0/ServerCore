@@ -5,8 +5,8 @@ import kr.sul.servercore.command.NbtViewCommand
 import kr.sul.servercore.datasaveschedule.DataSaveCommand
 import kr.sul.servercore.datasaveschedule.DataSaveScheduleEvent
 import kr.sul.servercore.datasaveschedule.DataSaveScheduler
-import kr.sul.servercore.freeze.FrozenPlayer
-import kr.sul.servercore.freeze.FrozenPlayerListener
+//import kr.sul.servercore.freeze.FrozenPlayer
+//import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
 import kr.sul.servercore.something.KickAllBeforeServerStop
 import kr.sul.servercore.something.TakeAwayPermissionIfNotOp
@@ -21,7 +21,7 @@ class ServerCore : JavaPlugin() {
     companion object {
         internal lateinit var plugin: Plugin private set
         lateinit var instance: ServerCore private set
-        val frozenPlayer = FrozenPlayer
+//        val frozenPlayer = FrozenPlayer
     }
 
     override fun onEnable() {
@@ -32,7 +32,7 @@ class ServerCore : JavaPlugin() {
 
     private fun registerClasses() {
         registerDataSaveSchedule()
-        Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
+//        Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
         Bukkit.getPluginManager().registerEvents(KickAllBeforeServerStop, this)
         Bukkit.getPluginManager().registerEvents(KillAllCommand, this)
