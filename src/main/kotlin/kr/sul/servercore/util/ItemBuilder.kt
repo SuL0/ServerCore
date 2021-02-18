@@ -24,23 +24,32 @@ object ItemBuilder {
         return this
     }
 
-    fun ItemStack.loreIB(text: String): ItemStack {
+    // addSpace은 텍스트가 아이템의 네모 칸에서 벗어나는 현상을 방지하기 위해서임
+    fun ItemStack.loreIB(text: String, addSpace: Int=0): ItemStack {
+        val modifiedText = run {
+            if (addSpace > 0) {
+                val strBuilder = StringBuilder(text)
+                for (i in 0 until addSpace) {
+                    strBuilder.append(" ")
+                }
+                return@run strBuilder.toString()
+            }
+            return@run text
+        }
+
         val meta = itemMeta
         var lore: MutableList<String>? = meta.lore
         if (lore == null) lore = ArrayList()
-        lore.add(text.c())
+
+        lore.add(modifiedText.c())
         meta.lore = lore
         itemMeta = meta
         return this
     }
 
-    fun ItemStack.loreIB(vararg text: String): ItemStack {
-        Arrays.stream(text).forEach { this.loreIB(it) }
-        return this
-    }
-
-    fun ItemStack.loreIB(text: List<String>): ItemStack {
-        text.forEach { this.loreIB(it) }
+    // 문자 숫자로는 실질적으로 문자가 차지하는 크기를 잴 수 없어서, 그냥 모두에게 공백을 첨가
+    fun ItemStack.loreIB(text: List<String>, addSpace: Int=0): ItemStack {
+        text.forEach { this.loreIB(it, addSpace) }
         return this
     }
 
