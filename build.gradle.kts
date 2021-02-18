@@ -19,10 +19,14 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.12.2-R0.1-SNAPSHOT")
 
     compileOnly("com.comphenix.protocol", "ProtocolLib", "4.5.1")
+    compileOnly("net.wesjd", "anvilgui", "1.4.0-SNAPSHOT")
+
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
     compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.5.0.jar"))
 }
 
+val shade = configurations.create("shade")
+shade.extendsFrom(configurations.compileOnly.get())
 
 tasks {
     compileJava.get().options.encoding = "UTF-8"
@@ -38,6 +42,15 @@ tasks {
         archiveFileName.set("${project.name}_S.jar")
         destinationDirectory.set(file(pluginStorage))
 
+        from(
+            shade.filter { it.name.startsWith("anvilgui") }  // compileOnly 파일 중에 anvilgui만!
+                .map {
+                    if (it.isDirectory)
+                        it
+                    else
+                        zipTree(it)
+                }
+        )
         finalizedBy(copyPlugin)
     }
 }
