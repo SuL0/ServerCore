@@ -32,9 +32,6 @@ class ConfirmGui(plugin: Plugin,
         p.openInventory(inventory)
     }
 
-    fun onInvClose() {
-        HandlerList.unregisterAll(listener)
-    }
 
     inner class ListenUp: Listener {
         @EventHandler
@@ -53,7 +50,9 @@ class ConfirmGui(plugin: Plugin,
 
         @EventHandler
         fun onInvClose(e: InventoryCloseEvent) {
-            onInvClose()
+            if (e.inventory == inventory) {
+                HandlerList.unregisterAll(this)
+            }
         }
     }
 
@@ -111,9 +110,9 @@ class ConfirmGui(plugin: Plugin,
 
         // build().open()을 간략화시킴
         fun open(p: Player): ConfirmGui {
-            val getConfirmGui = ConfirmGui(plugin, p, title, askItem, confirmItem, denyItem, onConfirm, onDeny, onClose)
-            getConfirmGui.open()
-            return getConfirmGui
+            val confirmGui = ConfirmGui(plugin, p, title, askItem, confirmItem, denyItem, onConfirm, onDeny, onClose)
+            confirmGui.open()
+            return confirmGui
         }
     }
 }
