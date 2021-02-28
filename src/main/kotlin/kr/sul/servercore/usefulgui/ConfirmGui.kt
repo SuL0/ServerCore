@@ -1,4 +1,4 @@
-package kr.sul.servercore.getconfirmgui
+package kr.sul.servercore.usefulgui
 
 import kr.sul.servercore.util.ItemBuilder.loreIB
 import kr.sul.servercore.util.ItemBuilder.nameIB
