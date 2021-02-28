@@ -51,6 +51,7 @@ class ConfirmGui(plugin: Plugin,
         @EventHandler
         fun onInvClose(e: InventoryCloseEvent) {
             if (e.inventory == inventory) {
+                onClose?.run()
                 HandlerList.unregisterAll(this)
             }
         }
