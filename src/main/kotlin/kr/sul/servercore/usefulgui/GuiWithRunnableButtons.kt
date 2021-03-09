@@ -14,7 +14,7 @@ import org.bukkit.plugin.Plugin
 class GuiWithRunnableButtons(plugin: Plugin,
                              private val p: Player,
                              private val title: String, private val lines: Int,
-                             private val runnableButtonList: List<RunnableButton>,
+                             private val runnableButtonMap: Map<Int, RunnableButton>,
                              private val onClose: Runnable?) {
     private lateinit var inventory: Inventory
     private val listener = ListenUp()
@@ -25,8 +25,8 @@ class GuiWithRunnableButtons(plugin: Plugin,
 
     fun open() {
         inventory = Bukkit.createInventory(null, lines*9, title)
-        runnableButtonList.forEach {
-            inventory.addItem(it.item)
+        runnableButtonMap.forEach {
+            inventory.setItem(it.key, it.value.item)
         }
         p.openInventory(inventory)
     }
@@ -37,9 +37,9 @@ class GuiWithRunnableButtons(plugin: Plugin,
             if (e.clickedInventory == inventory) {
                 e.isCancelled = true
                 // index 기반으로 인식
-                if (e.slot <= runnableButtonList.size) {
-                    runnableButtonList[e.slot].onClick.run()
-                    e.whoClicked.closeInventory()
+                if (runnableButtonMap.containsKey(e.slot)) {
+                    runnableButtonMap[e.slot]!!.onClick?.run()
+                    // 일부러 closeInventory() 넣지 않았음
                 }
             }
         }
@@ -54,14 +54,13 @@ class GuiWithRunnableButtons(plugin: Plugin,
 
 
 
-
-    data class RunnableButton(val item: ItemStack, val onClick: Runnable)
+    data class RunnableButton(val item: ItemStack, val onClick: Runnable?)
 
     class Builder {
         private lateinit var plugin: Plugin
         private lateinit var title: String
         private var lines = -1
-        private val runnableButtonList = arrayListOf<RunnableButton>()
+        private val runnableButtonMap = hashMapOf<Int, RunnableButton>()
         private var onClose: Runnable? = null
 
 
@@ -77,9 +76,9 @@ class GuiWithRunnableButtons(plugin: Plugin,
             this.lines = i
             return this
         }
-        fun addRunnableButton(item: ItemStack, onClick: Runnable): Builder {
+        fun addRunnableButton(index: Int, item: ItemStack, onClick: Runnable?): Builder {
             val runnableButton = RunnableButton(item, onClick)
-            runnableButtonList.add(runnableButton)
+            runnableButtonMap[index] = runnableButton
             return this
         }
         fun onClose(runnable: Runnable): Builder {
@@ -89,7 +88,7 @@ class GuiWithRunnableButtons(plugin: Plugin,
 
         // build().open()을 간략화시킴
         fun open(p: Player): GuiWithRunnableButtons {
-            val guiWithRunnable = GuiWithRunnableButtons(plugin, p, title, lines, runnableButtonList, onClose)
+            val guiWithRunnable = GuiWithRunnableButtons(plugin, p, title, lines, runnableButtonMap, onClose)
             guiWithRunnable.open()
             return guiWithRunnable
         }
