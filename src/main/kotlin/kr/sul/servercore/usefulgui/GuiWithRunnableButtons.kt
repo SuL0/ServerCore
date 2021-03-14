@@ -23,7 +23,7 @@ class GuiWithRunnableButtons(plugin: Plugin,
     }
 
 
-    fun open() {
+    fun openGuiWithRunnable() {
         inventory = Bukkit.createInventory(null, lines*9, title)
         runnableButtonMap.forEach {
             inventory.setItem(it.key, it.value.item)
@@ -89,7 +89,7 @@ class GuiWithRunnableButtons(plugin: Plugin,
         // build().open()을 간략화시킴
         fun open(p: Player): GuiWithRunnableButtons {
             val guiWithRunnable = GuiWithRunnableButtons(plugin, p, title, lines, runnableButtonMap, onClose)
-            guiWithRunnable.open()
+            guiWithRunnable.openGuiWithRunnable()
             return guiWithRunnable
         }
     }
