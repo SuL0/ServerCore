@@ -10,9 +10,14 @@ object UniqueIdAPI {
 
     @JvmStatic
     fun carveUniqueID(item: ItemStack) {
+        carveSpecificUniqueId(item, UUID.randomUUID())
+    }
+
+    @JvmStatic
+    fun carveSpecificUniqueId(item: ItemStack, uuid: UUID) {
         if (hasUniqueID(item)) throw Exception()
         val nbti = NbtItem(item)
-        nbti.tag.setString(UNIQUE_ID_KEY, UUID.randomUUID().toString())
+        nbti.tag.setString(UNIQUE_ID_KEY, uuid.toString())
         nbti.applyToOriginal()
     }
 
