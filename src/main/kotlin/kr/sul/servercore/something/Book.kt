@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.BookMeta
 import java.util.logging.Level
 import java.util.logging.Logger
 
+// https://github.com/upperlevel/book-api  이게 더 나으려나
 class Book {
     private val pm = ProtocolLibrary.getProtocolManager()
 

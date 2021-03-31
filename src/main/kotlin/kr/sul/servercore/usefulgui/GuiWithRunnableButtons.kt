@@ -46,8 +46,8 @@ class GuiWithRunnableButtons(plugin: Plugin,
         @EventHandler
         fun onInvClose(e: InventoryCloseEvent) {
             if (e.inventory == inventory) {
-                onClose?.run()
                 HandlerList.unregisterAll(this)
+                onClose?.run()
             }
         }
     }
@@ -81,13 +81,14 @@ class GuiWithRunnableButtons(plugin: Plugin,
             runnableButtonMap[index] = runnableButton
             return this
         }
+        // onClose에 Inventory를 여는 것은 1틱 딜레이를 둬야 하며, 그렇다고 하더라도 무한 루프를 야기할 수 있음.
         fun onClose(runnable: Runnable): Builder {
             onClose = runnable
             return this
         }
 
         // build().open()을 간략화시킴
-        fun open(p: Player): GuiWithRunnableButtons {
+        fun openGuiWithRunnable(p: Player): GuiWithRunnableButtons {
             val guiWithRunnable = GuiWithRunnableButtons(plugin, p, title, lines, runnableButtonMap, onClose)
             guiWithRunnable.openGuiWithRunnable()
             return guiWithRunnable
