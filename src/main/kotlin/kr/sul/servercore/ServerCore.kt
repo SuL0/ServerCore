@@ -1,15 +1,11 @@
 package kr.sul.servercore
 
-import kr.sul.servercore.command.KillAllCommand
-import kr.sul.servercore.command.NbtViewCommand
 import kr.sul.servercore.datasaveschedule.DataSaveCommand
 import kr.sul.servercore.datasaveschedule.DataSaveScheduleEvent
 import kr.sul.servercore.datasaveschedule.DataSaveScheduler
 //import kr.sul.servercore.freeze.FrozenPlayer
 //import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
-import kr.sul.servercore.something.KickAllBeforeServerStop
-import kr.sul.servercore.something.TakeAwayPermissionIfNotOp
 import kr.sul.servercore.util.ObjectInitializer
 import kr.sul.servercore.util.UptimeBasedOnTick
 import org.bukkit.Bukkit
@@ -34,15 +30,11 @@ class ServerCore : JavaPlugin() {
         registerDataSaveSchedule()
 //        Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
-        Bukkit.getPluginManager().registerEvents(KickAllBeforeServerStop, this)
-        Bukkit.getPluginManager().registerEvents(KillAllCommand, this)
-        Bukkit.getPluginManager().registerEvents(TakeAwayPermissionIfNotOp, this)
         ObjectInitializer.forceInit(UptimeBasedOnTick::class.java)
     }
     private fun registerDataSaveSchedule() {
         ObjectInitializer.forceInit(DataSaveScheduler::class.java)
         getCommand("서버저장").executor = DataSaveCommand
-        getCommand("nbtview").executor = NbtViewCommand
     }
 
     // 이거 제대로 되는지 모르겠네.
