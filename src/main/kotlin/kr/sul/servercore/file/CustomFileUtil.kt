@@ -24,8 +24,8 @@ object CustomFileUtil {
         return dateFormat.format(calendar.time)
     }
 
-    fun deleteFilesOlderThanNdays(daysBack: Int, dir: File, dontDeleteAtLeast: Int) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin) {
+    fun deleteFilesOlderThanNdays(daysBack: Int, dir: File, dontDeleteAtLeast: Int, asAsync: Boolean) {
+        val taskRunnable = Runnable {
             val listFiles = dir.listFiles()
             val purgeTime = System.currentTimeMillis() - daysBack * 24 * 60 * 60 * 1000
             if (listFiles != null && listFiles.isNotEmpty()) {
@@ -35,6 +35,15 @@ object CustomFileUtil {
                     }
                 }
             }
+        }
+
+        // Async / Sync 여부
+        if (asAsync) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin) {
+                taskRunnable.run()
+            }
+        } else {
+            taskRunnable.run()
         }
     }
 }
