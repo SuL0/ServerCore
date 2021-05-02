@@ -3,6 +3,7 @@ package kr.sul.servercore
 import kr.sul.servercore.datasaveschedule.DataSaveCommand
 import kr.sul.servercore.datasaveschedule.DataSaveScheduleEvent
 import kr.sul.servercore.datasaveschedule.DataSaveScheduler
+import kr.sul.servercore.file.simplylog.SimplyLog
 //import kr.sul.servercore.freeze.FrozenPlayer
 //import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
@@ -42,6 +43,8 @@ class ServerCore : JavaPlugin() {
     // TODO) 이벤트가 제때 받아지는지 확인할 필요가 있음.
     // TODO) 이거 월드 저장도 해줘야되는데, 코드를 어디다가 넣어놨더라?
     override fun onDisable() {
+        SimplyLog.saveAllToFile(false)
+
         instance.server.pluginManager.callEvent(DataSaveScheduleEvent(false))
         instance.logger.log(Level.INFO, "[서버 종료] 서버 데이터 저장")
     }
