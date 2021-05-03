@@ -1,21 +1,19 @@
 package kr.sul.servercore.util
 
 import org.bukkit.Location
-import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 import kotlin.math.abs
 
-
 // https://www.spigotmc.org/threads/tutorial-get-the-entity-another-entity-is-looking-at.202495/
-object GetTargetPlayer {
-    fun get(player: Player, distance: Double): Entity? {
-        var targetPlayer: Entity? = null
+object GetAimedPlayer {
+    fun get(player: Player, maxDistance: Double): Player? {
+        var targetPlayer: Player? = null
         val playerPos: Location = player.eyeLocation
         val playerDir = Vector3D(playerPos.direction)
         val playerStart = Vector3D(playerPos)
         val playerEnd: Vector3D = playerStart.add(playerDir.multiply(100))
-        for (p in player.getNearbyEntities(distance, distance, distance)) {
+        for (p in player.world.getNearbyPlayers(player.location, maxDistance)) {
             val targetPos = Vector3D(p.location)
             val minimum: Vector3D = targetPos.add(-0.5, 0.0, -0.5)
             val maximum: Vector3D = targetPos.add(0.5, 1.67, 0.5)
