@@ -19,7 +19,10 @@ object GetAimedPlayer {
             val maximum: Vector3D = targetPos.add(0.5, 1.67, 0.5)
             if (p !== player && hasIntersection(playerStart, playerEnd, minimum, maximum)) {
                 if (targetPlayer == null || targetPlayer.location.distanceSquared(playerPos) > p.location.distanceSquared(playerPos)) {
-                    targetPlayer = p
+                    // 중간에 블럭이 없는지 체크하도록 추가
+                    if (!player.hasLineOfSight(p)) {
+                        targetPlayer = p
+                    }
                 }
             }
         }
