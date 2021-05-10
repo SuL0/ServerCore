@@ -32,6 +32,7 @@ class ServerCore : JavaPlugin() {
 //        Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
         ObjectInitializer.forceInit(UptimeBasedOnTick::class.java)
+        ObjectInitializer.forceInit(SimplyLog::class.java)
     }
     private fun registerDataSaveSchedule() {
         ObjectInitializer.forceInit(DataSaveScheduler::class.java)
