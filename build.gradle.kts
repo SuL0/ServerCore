@@ -21,9 +21,10 @@ dependencies {
     compileOnly("com.comphenix.protocol", "ProtocolLib", "4.5.1")
     compileOnly("net.wesjd", "anvilgui", "1.4.0-SNAPSHOT")
     compileOnly("net.lingala.zip4j", "zip4j", "2.7.0")
+    runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
 
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
-    compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.5.0.jar"))
+    compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.6.0.jar"))
 }
 
 val shade = configurations.create("shade")

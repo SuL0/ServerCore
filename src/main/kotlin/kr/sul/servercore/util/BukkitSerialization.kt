@@ -11,6 +11,46 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 object BukkitSerialization {
+
+    // ItemStack 1개만을 위한 Serialization이 없기에 추가
+
+    @JvmStatic
+    @Throws(IllegalStateException::class)
+    fun itemStackToBase64(item: ItemStack): String {
+        return try {
+            val outputStream = ByteArrayOutputStream()
+            val dataOutput = BukkitObjectOutputStream(outputStream)
+
+            // Save itemStack
+            dataOutput.writeObject(item)
+
+            // Serialize that array
+            dataOutput.close()
+            Base64Coder.encodeLines(outputStream.toByteArray())
+        } catch (e: Exception) {
+            throw IllegalStateException("Unable to save item stacks.", e)
+        }
+    }
+
+    @JvmStatic
+    @Throws(IOException::class)
+    fun itemStackFromBase64(data: String): ItemStack {
+        return try {
+            val inputStream = ByteArrayInputStream(Base64Coder.decodeLines(data))
+            val dataInput = BukkitObjectInputStream(inputStream)
+
+            // Read the serialized itemStack
+            val item = dataInput.readObject() as ItemStack
+            dataInput.close()
+            item
+        } catch (e: ClassNotFoundException) {
+            throw IOException("Unable to de code class type.", e)
+        }
+    }
+
+
+
+
     // graywolf336 직렬화/역직렬화
     /**
      * A method to serialize an [ItemStack] array to Base64 String.
@@ -87,7 +127,7 @@ object BukkitSerialization {
      */
     @JvmStatic
     @Throws(IOException::class)
-    fun fromBase64(data: String?): Inventory {
+    fun fromBase64(data: String): Inventory {
         return try {
             val inputStream = ByteArrayInputStream(Base64Coder.decodeLines(data))
             val dataInput = BukkitObjectInputStream(inputStream)
@@ -115,7 +155,7 @@ object BukkitSerialization {
      */
     @JvmStatic
     @Throws(IOException::class)
-    fun itemStackArrayFromBase64(data: String?): Array<ItemStack?> {
+    fun itemStackArrayFromBase64(data: String): Array<ItemStack?> {
         return try {
             val inputStream = ByteArrayInputStream(Base64Coder.decodeLines(data))
             val dataInput = BukkitObjectInputStream(inputStream)
