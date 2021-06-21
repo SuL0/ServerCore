@@ -9,6 +9,7 @@ repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://repo.dmulloy2.net/nexus/repository/public/")
+    maven("https://repo.codemc.io/repository/maven-snapshots")
     mavenLocal()
 }
 
@@ -19,7 +20,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.12.2-R0.1-SNAPSHOT")
 
     compileOnly("com.comphenix.protocol", "ProtocolLib", "4.5.1")
-    compileOnly("net.wesjd", "anvilgui", "1.4.0-SNAPSHOT")
+    compileOnly("net.wesjd", "anvilgui", "1.5.0-SNAPSHOT")
     compileOnly("net.lingala.zip4j", "zip4j", "2.7.0")
     runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
 
@@ -39,6 +40,10 @@ tasks {
         from(files("$pluginStorage/${project.name}_S.jar"))
         into(file("C:/Users/PHR/Desktop/SERVER2/plugins"))
     }
+    val copyPlugin_2 = register<Copy>("copyPlugin_2") {
+        from(files("$pluginStorage/${project.name}_S.jar"))
+        into(file("C:/Users/PHR/Desktop/마인즈서버/plugins"))
+    }
 
     jar {
         archiveFileName.set("${project.name}_S.jar")
@@ -53,6 +58,6 @@ tasks {
                         zipTree(it)
                 }
         )
-        finalizedBy(copyPlugin)
+        finalizedBy(copyPlugin, copyPlugin_2)
     }
 }
