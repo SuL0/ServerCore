@@ -18,7 +18,7 @@ object SimplyLog {
     init {
         // 폴더, 파일 생성. Log파일은 Enum LogLevel init 에서 생성함
         if (!parentFolder.exists()) {
-            parentFolder.mkdir()
+            parentFolder.mkdirs()
         }
 
         // 저장 scheduler
