@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.5.20"
 }
 
 group = "kr.sul"
@@ -23,6 +23,7 @@ dependencies {
     compileOnly("net.wesjd", "anvilgui", "1.5.0-SNAPSHOT")
     compileOnly("net.lingala.zip4j", "zip4j", "2.7.0")
     runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
+    compileOnly("net.luckperms", "api", "5.3")
 
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
     compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.6.0.jar"))
