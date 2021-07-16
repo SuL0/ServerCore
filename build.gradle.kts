@@ -24,6 +24,7 @@ dependencies {
     compileOnly("net.lingala.zip4j", "zip4j", "2.7.0")
     runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
     compileOnly("net.luckperms", "api", "5.3")
+    compileOnly("xyz.upperlevel.spigot.book", "spigot-book-api", "1.5")
 
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
     compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.6.0.jar"))
@@ -51,7 +52,9 @@ tasks {
         destinationDirectory.set(file(pluginStorage))
 
         from(
-            shade.filter { it.name.startsWith("anvilgui") || it.name.startsWith("zip4j") }
+            shade.filter { it.name.startsWith("anvilgui")
+                    || it.name.startsWith("zip4j")
+                    || it.name.startsWith("spigot-book-api") }
                 .map {
                     if (it.isDirectory)
                         it
