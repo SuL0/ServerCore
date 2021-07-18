@@ -7,6 +7,7 @@ import kr.sul.servercore.file.simplylog.SimplyLog
 //import kr.sul.servercore.freeze.FrozenPlayer
 //import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
+import kr.sul.servercore.util.ClassifyWorlds
 import kr.sul.servercore.util.ObjectInitializer
 import kr.sul.servercore.util.UptimeBasedOnTick
 import org.bukkit.Bukkit
@@ -31,6 +32,7 @@ class ServerCore : JavaPlugin() {
         registerDataSaveSchedule()
 //        Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
+        Bukkit.getPluginManager().registerEvents(ClassifyWorlds, this)
         ObjectInitializer.forceInit(UptimeBasedOnTick::class.java)
         ObjectInitializer.forceInit(SimplyLog::class.java)
     }

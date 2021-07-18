@@ -38,10 +38,10 @@ tasks {
     compileKotlin.get().kotlinOptions.jvmTarget = "1.8"
     compileTestKotlin.get().kotlinOptions.jvmTarget = "1.8"
 
-    val copyPlugin = register<Copy>("copyPlugin") {
-        from(files("$pluginStorage/${project.name}_S.jar"))
-        into(file("C:/Users/PHR/Desktop/SERVER2/plugins"))
-    }
+//    val copyPlugin = register<Copy>("copyPlugin") {
+//        from(files("$pluginStorage/${project.name}_S.jar"))
+//        into(file("C:/Users/PHR/Desktop/SERVER2/plugins"))
+//    }
     val copyPlugin_2 = register<Copy>("copyPlugin_2") {
         from(files("$pluginStorage/${project.name}_S.jar"))
         into(file("C:/Users/PHR/Desktop/마인즈서버/plugins"))
@@ -62,6 +62,6 @@ tasks {
                         zipTree(it)
                 }
         )
-        finalizedBy(copyPlugin, copyPlugin_2)
+        finalizedBy(copyPlugin_2)
     }
 }

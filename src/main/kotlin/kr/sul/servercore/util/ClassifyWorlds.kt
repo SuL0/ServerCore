@@ -1,24 +1,31 @@
 package kr.sul.servercore.util
 
-import kr.sul.servercore.ServerCore.Companion.plugin
-import org.bukkit.Bukkit
 import org.bukkit.World
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.world.WorldLoadEvent
+import java.util.*
 
-object ClassifyWorlds {
-    // TODO use file to define world's type.
+object ClassifyWorlds: Listener {
     val spawnWorlds = arrayListOf<World>()
-    val inGameWorlds = arrayListOf<World>()
+    val normalWorlds = arrayListOf<World>()
+    val hardTestWorlds = arrayListOf<World>()
+    val hardWorlds = arrayListOf<World>()
 
-    init {
-        Bukkit.getScheduler().runTask(plugin) {
-            listOf("SPAWN-2").forEach {                       // 일단 테스트용. 나중에 월드 이름 SPAWN-01, 02 로 ㄱㄱ
-                spawnWorlds.add(Bukkit.getWorld(it))
-            }
+    @EventHandler
+    fun onWorldLoad(e: WorldLoadEvent) {
+        val worldName = e.world.name.uppercase(Locale.ENGLISH)
+
+        when {
+            worldName.startsWith("SPAWN-") -> spawnWorlds.add(e.world)
+            worldName.startsWith("NORMAL-") -> normalWorlds.add(e.world)
+            worldName.startsWith("HARD_TEST-") -> hardTestWorlds.add(e.world)
+            worldName.startsWith("HARD-") -> hardWorlds.add(e.world)
         }
     }
 
     fun isSpawnWorld(world: World): Boolean {
-        return (world.name.startsWith("SPAWN", true))
+        return spawnWorlds.contains(world)
     }
 //    fun inGameWorld(world: World): Boolean {}
 }
