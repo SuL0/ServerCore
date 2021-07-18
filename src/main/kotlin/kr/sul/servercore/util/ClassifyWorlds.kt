@@ -1,5 +1,7 @@
 package kr.sul.servercore.util
 
+import kr.sul.servercore.ServerCore.Companion.plugin
+import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,17 +14,28 @@ object ClassifyWorlds: Listener {
     val hardTestWorlds = arrayListOf<World>()
     val hardWorlds = arrayListOf<World>()
 
-    @EventHandler
-    fun onWorldLoad(e: WorldLoadEvent) {
-        val worldName = e.world.name.uppercase(Locale.ENGLISH)
-
-        when {
-            worldName.startsWith("SPAWN-") -> spawnWorlds.add(e.world)
-            worldName.startsWith("NORMAL-") -> normalWorlds.add(e.world)
-            worldName.startsWith("HARD_TEST-") -> hardTestWorlds.add(e.world)
-            worldName.startsWith("HARD-") -> hardWorlds.add(e.world)
+    init {
+        Bukkit.getScheduler().runTask(plugin) {
+            Bukkit.getWorlds().forEach {
+                registerWorld(it)
+            }
         }
     }
+
+    @EventHandler
+    fun onWorldLoad(e: WorldLoadEvent) {
+        registerWorld(e.world)
+    }
+    private fun registerWorld(world: World) {
+        val worldName = world.name.uppercase(Locale.ENGLISH)
+        when {
+            worldName.startsWith("SPAWN-") -> spawnWorlds.add(world)
+            worldName.startsWith("NORMAL-") -> normalWorlds.add(world)
+            worldName.startsWith("HARD_TEST-") -> hardTestWorlds.add(world)
+            worldName.startsWith("HARD-") -> hardWorlds.add(world)
+        }
+    }
+
 
     fun isSpawnWorld(world: World): Boolean {
         return spawnWorlds.contains(world)
