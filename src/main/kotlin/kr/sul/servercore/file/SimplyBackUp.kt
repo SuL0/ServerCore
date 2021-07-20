@@ -42,9 +42,6 @@ object SimplyBackUp {
                     File("${destinationFolder.path}/${nameWithoutExtension}.${whatToBackUp.extension}")
                 }
             }
-            if (destinationFile.exists()) {
-                throw Exception(destinationFile.name)
-            }
 
             // destinationFile 이 이미 존재한다면, return
             if (destinationFile.exists()) {
