@@ -6,7 +6,8 @@ import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.entity.Player
 
-object World {
+// Bukkit.getOnlinePlayers 에는 world.players 와 달리 Citizen NPC가 섞여들어가는 일은 없음
+object WorldPlayers {
     private var isCitizenEnabled = false
     init {
         Bukkit.getScheduler().runTask(ServerCore.plugin) {
