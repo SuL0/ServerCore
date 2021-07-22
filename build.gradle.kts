@@ -25,6 +25,7 @@ dependencies {
     runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
     compileOnly("net.luckperms", "api", "5.3")
     compileOnly("xyz.upperlevel.spigot.book", "spigot-book-api", "1.5")
+    compileOnly("net.citizensnpcs", "citizensapi", "2.0.28-SNAPSHOT")
 
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
     compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.6.0.jar"))
