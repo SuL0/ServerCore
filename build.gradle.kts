@@ -26,6 +26,7 @@ dependencies {
     compileOnly("net.luckperms", "api", "5.3")
     compileOnly("xyz.upperlevel.spigot.book", "spigot-book-api", "1.5")
     compileOnly("net.citizensnpcs", "citizensapi", "2.0.28-SNAPSHOT")
+    compileOnly("com.github.MilkBowl","VaultAPI", "1.7")
 
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
     compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.6.0.jar"))
