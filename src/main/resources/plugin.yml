@@ -3,10 +3,7 @@ version: 1.0-SNAPSHOT
 api-version: 1.12
 main: kr.sul.servercore.ServerCore
 author: SuL
-softdepend:
-  - CrackShotAddition
-  - NBTAPI
-  - ProtocolLib
+load: STARTUP
 description: "Core Plugin"
 
 commands:
