@@ -6,39 +6,42 @@ import org.bukkit.World
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.world.WorldLoadEvent
+import org.bukkit.event.world.WorldUnloadEvent
 import java.util.*
 
 object ClassifyWorlds: Listener {
-    val spawnWorlds = arrayListOf<World>()
-    val normalWorlds = arrayListOf<World>()
-    val hardTestWorlds = arrayListOf<World>()
-    val hardWorlds = arrayListOf<World>()
+    val spawnWorlds = WorldList("spawn")
 
     init {
         Bukkit.getScheduler().runTask(plugin) {
-            Bukkit.getWorlds().forEach {
-                registerWorld(it)
-            }
+            Bukkit.broadcastMessage("[spawnWorlds]")
+            Bukkit.broadcastMessage("[spawnWorlds]: $spawnWorlds -${spawnWorlds.size}")
         }
     }
-
-    @EventHandler
-    fun onWorldLoad(e: WorldLoadEvent) {
-        registerWorld(e.world)
-    }
-    private fun registerWorld(world: World) {
-        val worldName = world.name.uppercase(Locale.ENGLISH)
-        when {
-            worldName.startsWith("SPAWN-") -> spawnWorlds.add(world)
-            worldName.startsWith("NORMAL-") -> normalWorlds.add(world)
-            worldName.startsWith("HARD_TEST-") -> hardTestWorlds.add(world)
-            worldName.startsWith("HARD-") -> hardWorlds.add(world)
-        }
-    }
-
 
     fun isSpawnWorld(world: World): Boolean {
         return spawnWorlds.contains(world)
     }
-//    fun inGameWorld(world: World): Boolean {}
+
+
+    // 자동으로 월드 리스트 관리
+    class WorldList(private val startWithThisName: String): ArrayList<World>(), Listener {
+        init {
+            Bukkit.getPluginManager().registerEvents(this, plugin)
+        }
+
+        @EventHandler
+        fun onWorldLoad(e: WorldLoadEvent) {
+            if (e.world.name.lowercase().startsWith(startWithThisName.lowercase())) {
+                this.add(e.world)
+            }
+        }
+
+        @EventHandler
+        fun onWorldUnload(e: WorldUnloadEvent) {
+            if (e.world.name.lowercase().startsWith(startWithThisName.lowercase())) {
+                this.remove(e.world)
+            }
+        }
+    }
 }
