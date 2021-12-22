@@ -16,6 +16,7 @@ repositories {
     maven("https://repo.codemc.io/repository/maven-snapshots")
     maven("https://maven.elmakers.com/repository/")
     maven("https://repo.citizensnpcs.co/")
+    maven("https://nexus-repo.jordanosterberg.com/repository/maven-releases/")
     mavenLocal()
 }
 
@@ -41,6 +42,7 @@ dependencies {
     implementation("net.lingala.zip4j", "zip4j", "2.9.0")
 //    runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
     implementation("xyz.upperlevel.spigot.book", "spigot-book-api", "1.5")
+    implementation("dev.jcsoftware", "JScoreboards","2.1.2-RELEASE")
     // PacketWrapper을 Project 만들어서 빌드하고 여기서 shade해서 쓸까?
 }
 
@@ -78,6 +80,7 @@ tasks {
             include(dependency("net.wesjd:anvilgui"))
             include(dependency("net.lingala.zip4j:zip4j"))
             include(dependency("xyz.upperlevel.spigot.book:spigot-book-api"))
+            include(dependency("dev.jcsoftware:JScoreboards"))
         }
         finalizedBy(copyPlugin_2)
     }
