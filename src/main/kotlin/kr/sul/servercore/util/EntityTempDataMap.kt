@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin
 /**
  * 일반 HashMap 이랑 동일하지만, onQuit onEntityDeath 시 해당 엔티티 값 삭제 기능 기본 탑재
  */
-class EntityTempDataMap<V>: HashMap<Entity, V>(), Listener {
+class EntityTempDataMap<V> private constructor(): HashMap<Entity, V>(), Listener {
     companion object {
         fun<V> create(plugin: Plugin): EntityTempDataMap<V> {
             val obj = EntityTempDataMap<V>()
