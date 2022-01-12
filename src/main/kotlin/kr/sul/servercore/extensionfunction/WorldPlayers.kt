@@ -3,6 +3,7 @@ package kr.sul.servercore.extensionfunction
 import kr.sul.servercore.ServerCore
 import net.citizensnpcs.api.CitizensAPI
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.Player
 
@@ -26,7 +27,7 @@ object WorldPlayers {
         }
         val players = this.players
         val toRemove = arrayListOf<Player>()
-        players.forEach { p ->
+        for (p in players) {
             for (reg in CitizensAPI.getNPCRegistries()) {
                 if (reg.isNPC(p)) {
                     toRemove.add(p)
@@ -36,6 +37,20 @@ object WorldPlayers {
         }
         players.removeAll(toRemove)
         return players
+    }
+
+    fun Location.getNearbyRealPlayers(radius: Double): MutableCollection<Player> {
+        if (!isCitizenEnabled) {
+            return this.getNearbyPlayers(radius)!!
+        }
+        val realPlayersInThisWorld = this.world.getRealPlayers()
+        val toReturn = arrayListOf<Player>()
+        for (p in realPlayersInThisWorld) {
+            if (this.distance(p.location) <= radius) {
+                toReturn.add(p)
+            }
+        }
+        return toReturn
     }
     fun World.getRealPlayersExcept(p: Player): List<Player> {
         return getRealPlayers().filter { it != p }
