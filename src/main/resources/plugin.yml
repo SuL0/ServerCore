@@ -5,6 +5,7 @@ main: kr.sul.servercore.ServerCore
 author: SuL
 load: STARTUP
 description: "Core Plugin"
+depend: [KotlinLoader]
 
 commands:
   서버저장:
