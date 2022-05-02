@@ -4,6 +4,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     kotlin("jvm") version "1.5.21"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    `java-library`
+    `maven-publish`
 }
 
 group = "kr.sul"
@@ -17,6 +19,8 @@ repositories {
     maven("https://maven.elmakers.com/repository/")
     maven("https://repo.citizensnpcs.co/")
     maven("https://nexus-repo.jordanosterberg.com/repository/maven-releases/")
+    maven("https://github.com/deanveloper/SkullCreator/raw/mvn-repo/")
+    maven("https://repo.codemc.org/repository/maven-public/")
     mavenLocal()
 }
 
@@ -27,22 +31,25 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     compileOnly(files(nmsBukkitPath))
 
-    compileOnly("com.github.MilkBowl","VaultAPI", "1.7")
-    compileOnly("net.luckperms", "api", "5.3")
-    compileOnly("net.citizensnpcs", "citizensapi", "2.0.28-SNAPSHOT")
-    compileOnly("com.comphenix.protocol", "ProtocolLib", "4.6.0")
-    compileOnly("kr.sul", "MiscellaneousThings-2", "1.0-SNAPSHOT")
-    compileOnly(files("$pluginStorage/Dependencies/item-nbt-api-plugin-2.6.0.jar"))
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly("net.luckperms:api:5.3")
+    compileOnly("net.citizensnpcs:citizensapi:2.0.28-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:4.6.0")
+    compileOnly("kr.sul:MiscellaneousThings-2:1.0-SNAPSHOT")
+    compileOnly("de.tr7zw:item-nbt-api-plugin:2.6.0")
     compileOnly(files("$pluginStorage/ResourcepackSoundPlayer_S.jar"))
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
 
     
     // SHADE
-    implementation("net.wesjd", "anvilgui", "1.5.0-SNAPSHOT")
-    implementation("net.lingala.zip4j", "zip4j", "2.9.0")
-//    runtimeOnly("net.lingala.zip4j", "zip4j", "2.7.0")
-    implementation("xyz.upperlevel.spigot.book", "spigot-book-api", "1.5")
-    implementation("dev.jcsoftware", "JScoreboards","2.1.2-RELEASE")
+    implementation("net.wesjd:anvilgui:1.5.0-SNAPSHOT")
+    implementation("net.lingala.zip4j:zip4j:2.9.0")
+    implementation("xyz.upperlevel.spigot.book:spigot-book-api:1.5")
+    implementation("dev.jcsoftware:JScoreboards:2.1.2-RELEASE")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:1.5.0")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:1.5.0")
+    implementation("dev.dbassett:skullcreator:3.0.1")
+    implementation("net.bytebuddy:byte-buddy:1.12.8")
     // PacketWrapper을 Project 만들어서 빌드하고 여기서 shade해서 쓸까?
 }
 
@@ -81,9 +88,31 @@ tasks {
             include(dependency("net.lingala.zip4j:zip4j"))
             include(dependency("xyz.upperlevel.spigot.book:spigot-book-api"))
             include(dependency("dev.jcsoftware:JScoreboards"))
+            include(dependency("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api"))
+            include(dependency("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core"))
+            include(dependency("dev.dbassett:skullcreator"))
+            include(dependency("net.bytebuddy:byte-buddy"))
         }
         finalizedBy(copyPlugin_2)
+        finalizedBy(publishToMavenLocal)
     }
 
     build { dependsOn(shadowJar) }
+}
+
+
+
+publishing {
+    // 원래는 밖에 두는데, 이렇게 해도 차이 없어서 이쪽으로 묶음.
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = rootProject.group as String
+            version = rootProject.version as String
+            from(components["java"])
+        }
+    }
 }

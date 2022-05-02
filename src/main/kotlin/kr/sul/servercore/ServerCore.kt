@@ -1,14 +1,14 @@
 package kr.sul.servercore
 
+//import kr.sul.servercore.freeze.FrozenPlayer
+//import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.datasaveschedule.DataSaveCommand
 import kr.sul.servercore.datasaveschedule.DataSaveScheduleEvent
 import kr.sul.servercore.datasaveschedule.DataSaveScheduler
-import kr.sul.servercore.file.SimplyBackup
 import kr.sul.servercore.file.simplylog.LogLevel
 import kr.sul.servercore.file.simplylog.SimplyLog
-//import kr.sul.servercore.freeze.FrozenPlayer
-//import kr.sul.servercore.freeze.FrozenPlayerListener
 import kr.sul.servercore.inventoryevent.InventoryItemListener
+import kr.sul.servercore.player.scoreboard.ScoreboardPlayer
 import kr.sul.servercore.util.ClassifyWorlds
 import kr.sul.servercore.util.ObjectInitializer
 import kr.sul.servercore.util.UptimeBasedOnTick
@@ -43,6 +43,7 @@ class ServerCore : JavaPlugin() {
 //        Bukkit.getPluginManager().registerEvents(FrozenPlayerListener, this)
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
         Bukkit.getPluginManager().registerEvents(ClassifyWorlds, this)
+        Bukkit.getPluginManager().registerEvents(ScoreboardPlayer.Mgr, this)
         ObjectInitializer.forceInit(UptimeBasedOnTick::class.java)
         ObjectInitializer.forceInit(SimplyLog::class.java)
     }

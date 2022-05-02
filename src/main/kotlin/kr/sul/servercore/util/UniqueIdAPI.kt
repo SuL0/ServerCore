@@ -1,7 +1,7 @@
 package kr.sul.servercore.util
 
-import kr.sul.servercore.nbtapi.NbtItem
 import org.bukkit.Material
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
@@ -11,14 +11,16 @@ object UniqueIdAPI {
     @JvmStatic
     fun hasUniqueID(item: ItemStack): Boolean {
         if (item.type == Material.AIR) return false
-        val nbti = NbtItem(item)
-        return nbti.tag.hasKey(UNIQUE_ID_KEY)
+        if (item !is CraftItemStack || item.handle == null) return false
+        val nmsItem = item.handle
+        return nmsItem.tagOrDefault.hasKey(UNIQUE_ID_KEY)
     }
 
     @JvmStatic
     fun getUniqueID(item: ItemStack): String? {
-        val nbti = NbtItem(item)
-        val uniqueId = nbti.tag.getString(UNIQUE_ID_KEY)
+        if (item !is CraftItemStack || item.handle == null) return null
+        val nmsItem = item.handle
+        val uniqueId = nmsItem.tagOrDefault.getString(UNIQUE_ID_KEY)
         if (uniqueId == "") {
             return null
         }
@@ -35,25 +37,22 @@ object UniqueIdAPI {
     @JvmStatic
     fun carveSpecificUniqueID(item: ItemStack, uuid: UUID) {
         if (hasUniqueID(item)) throw Exception()
-        val nbti = NbtItem(item)
-        nbti.tag.setString(UNIQUE_ID_KEY, uuid.toString())
-        nbti.applyToOriginal()
+        val nmsItem = (item as CraftItemStack).handle
+        nmsItem.tagOrDefault.setString(UNIQUE_ID_KEY, uuid.toString())
     }
 
     @JvmStatic
     fun wipeAndCarveNewUniqueID(item: ItemStack) {
         if (!hasUniqueID(item)) throw Exception()
-        val nbti = NbtItem(item)
-        nbti.tag.remove(UNIQUE_ID_KEY)
-        nbti.applyToOriginal()
+        val nmsItem = (item as CraftItemStack).handle
+        nmsItem.tagOrDefault.remove(UNIQUE_ID_KEY)
         carveUniqueID(item)
     }
 
     @JvmStatic
     fun wipeUniqueID(item: ItemStack) {
         if (!hasUniqueID(item)) throw Exception()
-        val nbti = NbtItem(item)
-        nbti.tag.remove(UNIQUE_ID_KEY)
-        nbti.applyToOriginal()
+        val nmsItem = (item as CraftItemStack).handle
+        nmsItem.tagOrDefault.remove(UNIQUE_ID_KEY)
     }
 }

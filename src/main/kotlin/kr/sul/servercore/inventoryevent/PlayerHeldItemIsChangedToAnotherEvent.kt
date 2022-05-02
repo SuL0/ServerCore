@@ -1,6 +1,6 @@
 package kr.sul.servercore.inventoryevent
 
-import kr.sul.crackshotaddition.util.CrackShotAdditionAPI
+//import kr.sul.crackshotaddition.util.CrackShotAdditionAPI
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
@@ -11,9 +11,9 @@ class PlayerHeldItemIsChangedToAnotherEvent
         (val player: Player, val clonedPreviousItemStack: ItemStack, val newItemStack: ItemStack, val newSlot: Int) : Event() {
     // clonedPreviousItemStack은 정확하지 않을 수 있음 !
 
-    fun isChangedToCrackShotWeapon(): Boolean {
-        return CrackShotAdditionAPI.isValidCrackShotWeapon(newItemStack)
-    }
+//    fun isChangedToCrackShotWeapon(): Boolean {
+//        return CrackShotAdditionAPI.isValidCrackShotWeapon(newItemStack)
+//    }
 
     override fun getHandlers(): HandlerList { return handlerList }
     companion object {
