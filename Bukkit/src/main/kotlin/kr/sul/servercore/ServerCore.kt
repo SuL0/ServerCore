@@ -44,6 +44,7 @@ class ServerCore : JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(InventoryItemListener, this)
         Bukkit.getPluginManager().registerEvents(ClassifyWorlds, this)
         Bukkit.getPluginManager().registerEvents(ScoreboardPlayer.Mgr, this)
+        Bukkit.getPluginManager().registerEvents(JedisTest, this)
         ObjectInitializer.forceInit(UptimeBasedOnTick::class.java)
         ObjectInitializer.forceInit(SimplyLog::class.java)
     }

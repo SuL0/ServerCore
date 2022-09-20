@@ -1,6 +1,6 @@
 //package kr.sul.servercore.freeze
 //
-//import kr.sul.servercore.ServerCore
+//import ServerCore
 //import org.bukkit.Bukkit
 //import org.bukkit.entity.Player
 //import org.bukkit.event.EventHandler
