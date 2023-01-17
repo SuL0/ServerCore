@@ -1,6 +1,12 @@
 group = "kr.sul"
 version = ext.get("version")!!
 
+val rootName = ext.get("rootName")!! as String
+bungee {
+    name = rootName
+}
+
+
 repositories {
     mavenLocal()
     mavenCentral()

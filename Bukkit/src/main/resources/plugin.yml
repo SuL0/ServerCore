@@ -1,7 +1,7 @@
 name: ServerCore
 version: 1.0-SNAPSHOT
 api-version: 1.12
-main: ServerCore
+main: kr.sul.servercore.ServerCore
 author: SuL
 load: STARTUP
 description: "Core Plugin"

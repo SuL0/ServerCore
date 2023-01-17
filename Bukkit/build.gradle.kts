@@ -1,3 +1,4 @@
+
 group = "kr.sul"
 version = ext.get("version")!!
 
@@ -19,6 +20,7 @@ repositories {
 val pluginStorage = ext.get("pluginStorage")!!
 dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
+//    runtimeOnly(kotlin("stdlib-jdk8")) // 테스트 실행하려면 runtimeOnly 필요
     compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
     compileOnly("com.destroystokyo.paper:paper:1.12.2-R0.1-SNAPSHOT")
 
@@ -30,6 +32,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:4.6.0")
     compileOnly("kr.sul:MiscellaneousThings-2:1.0-SNAPSHOT")
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.6.0")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly(files("$pluginStorage/ResourcepackSoundPlayer_S.jar"))
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
 //    api("co.aikar:acf-paper:0.5.1-SNAPSHOT")
@@ -40,10 +43,12 @@ dependencies {
 
 
     // api로 선언하면 transparent 때문에 ServerCore을 의존하는 프로젝트들은 api()로 된 것들도 dependency로 가져오게 됨
+    // implementation = compileOnly + runtimeOnly
+    // shade 하려면 runtimeOnly 필요
     implementation("net.wesjd:anvilgui:1.5.0-SNAPSHOT")
     implementation("net.lingala.zip4j:zip4j:2.10.0")
     implementation("xyz.upperlevel.spigot.book:spigot-book-api:1.5")
-    implementation("dev.jcsoftware:JScoreboards:2.1.2-RELEASE")
+//    implementation("dev.jcsoftware:JScoreboards:2.1.5-RELEASE")  // maven 저장소에서 내린 듯
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.2.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.2.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-bungeecord-api:2.2.0")
@@ -56,6 +61,7 @@ dependencies {
     implementation("redis.clients:jedis:4.2.3")
     implementation("org.apache.commons:commons-pool2:2.6.2")
     implementation("org.redisson:redisson:3.17.6")
-    implementation("com.github.MilkBowl:VaultAPI:1.7")
+    implementation("org.apache.poi:poi:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
     // PacketWrapper을 Project 만들어서 빌드하고 여기서 shade해서 쓸까?
 }
