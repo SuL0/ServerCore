@@ -1,5 +1,5 @@
 
-group = "kr.sul"
+group = "kr.sul.servercore"
 version = ext.get("version")!!
 
 repositories {
@@ -30,14 +30,14 @@ dependencies {
     compileOnly("net.citizensnpcs:citizens-main:2.0.29-SNAPSHOT")
     // local에서 직접 install한 Citizen main을 가져오게
     compileOnly("com.comphenix.protocol:ProtocolLib:4.6.0")
-    compileOnly("kr.sul:MiscellaneousThings-2:1.0-SNAPSHOT")
+//    compileOnly("kr.sul:MiscellaneousThings-2:1.0-SNAPSHOT")
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.6.0")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly(files("$pluginStorage/ResourcepackSoundPlayer_S.jar"))
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
 //    api("co.aikar:acf-paper:0.5.1-SNAPSHOT")
 //    api("redis.clients:jedis:4.2.3")
-    val lampVersion = "3.0.8"
+    val lampVersion = "3.1.2"
 //    api("com.github.Revxrsal.Lamp:common:$lampVersion")
 //    api("com.github.Revxrsal.Lamp:bukkit:$lampVersion")
 

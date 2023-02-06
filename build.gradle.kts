@@ -11,7 +11,7 @@ repositories {
     mavenCentral()
 }
 
-group = "kr.sul"
+group = "kr.sul.servercore"
 version = "1.0-SNAPSHOT"
 
 val versionMirror = version
@@ -21,7 +21,7 @@ val bukkitCopyDestination = "C:/MC-Development/마인즈서버/plugins"
 val bungeeCopyDestination = "C:/MC-Development/Waterfall/plugins"
 
 val getPluginName: (Project) -> String = { givenProject ->
-    "$rootName-${givenProject.name}_S-${givenProject.version}.jar"
+    "$rootName-${givenProject.name}-${givenProject.version}.jar"
 }
 subprojects {
     apply(plugin="org.jetbrains.kotlin.jvm")
@@ -37,11 +37,13 @@ subprojects {
         compileKotlin.get().kotlinOptions.jvmTarget = "1.8"
         compileTestKotlin.get().kotlinOptions.jvmTarget = "1.8"
     }
+
     publishing {
         java {
             withSourcesJar()
             withJavadocJar()
         }
+
         publications {
             create<MavenPublication>("maven") {
                 groupId = rootProject.group as String
@@ -61,8 +63,8 @@ subprojects {
             duplicatesStrategy = DuplicatesStrategy.EXCLUDE  // plugin.yml 을 SkullCreator 이 덮어쓰려 함 (INCLUDE 하면 덮어씀)
             archiveFileName.set(getPluginName.invoke(project))
             val destiny = when (project.name) {
-                "Bungee" -> bungeeCopyDestination
-                "Bukkit" -> bukkitCopyDestination
+                "bungee" -> bungeeCopyDestination
+                "bukkit" -> bukkitCopyDestination
                 else -> throw Exception()
             }
             destinationDirectory.set(file(destiny))  // clean 영향 안 받음. (영향받는 건 project.buildDir으로 설정했을 때)
@@ -73,6 +75,6 @@ subprojects {
     }
 }
 
-project(":Bungee").run {
+project(":bungee").run {
     apply(plugin="kr.entree.spigradle.bungee")
 }

@@ -1,3 +1,3 @@
 rootProject.name = "ServerCore"
-include("Bungee")
-include("Bukkit")
+include("bungee")
+include("bukkit")

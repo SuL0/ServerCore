@@ -1,5 +1,6 @@
-group = "kr.sul"
+group = "kr.sul.servercore"
 version = ext.get("version")!!
+
 
 val rootName = ext.get("rootName")!! as String
 bungee {
