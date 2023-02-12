@@ -1,30 +1,25 @@
 package kr.sul.servercore.util
 
+import kr.sul.minecraft.ItemUniqueID
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
 object UniqueIdAPI {
-    private const val UNIQUE_ID_KEY = "Item-UniqueID"
 
     @JvmStatic
     fun hasUniqueID(item: ItemStack): Boolean {
-        if (item.type == Material.AIR) return false
-        if (item !is CraftItemStack || item.handle == null) return false
-        val nmsItem = item.handle
-        return nmsItem.tagOrDefault.hasKey(UNIQUE_ID_KEY)
+        if (checkIfItemHasHandle(item)) return false
+        val nmsItem = (item as CraftItemStack).handle
+        return ItemUniqueID.hasUniqueID(nmsItem)
     }
 
     @JvmStatic
     fun getUniqueID(item: ItemStack): String? {
-        if (item !is CraftItemStack || item.handle == null) return null
-        val nmsItem = item.handle
-        val uniqueId = nmsItem.tagOrDefault.getString(UNIQUE_ID_KEY)
-        if (uniqueId == "") {
-            return null
-        }
-        return uniqueId
+        if (checkIfItemHasHandle(item)) return null
+        val nmsItem = (item as CraftItemStack).handle
+        return ItemUniqueID.getUniqueID(nmsItem)
     }
 
 
@@ -36,23 +31,28 @@ object UniqueIdAPI {
 
     @JvmStatic
     fun carveSpecificUniqueID(item: ItemStack, uuid: UUID) {
-        if (hasUniqueID(item)) throw Exception()
+        if (checkIfItemHasHandle(item)) throw Exception()
         val nmsItem = (item as CraftItemStack).handle
-        nmsItem.tagOrDefault.setString(UNIQUE_ID_KEY, uuid.toString())
+        ItemUniqueID.carveSpecificUniqueID(nmsItem, uuid)
     }
 
     @JvmStatic
     fun wipeAndCarveNewUniqueID(item: ItemStack) {
-        if (!hasUniqueID(item)) throw Exception()
+        if (checkIfItemHasHandle(item)) throw Exception()
         val nmsItem = (item as CraftItemStack).handle
-        nmsItem.tagOrDefault.remove(UNIQUE_ID_KEY)
-        carveUniqueID(item)
+        ItemUniqueID.wipeAndCarveNewUniqueID(nmsItem)
     }
 
     @JvmStatic
     fun wipeUniqueID(item: ItemStack) {
-        if (!hasUniqueID(item)) throw Exception()
+        if (checkIfItemHasHandle(item)) throw Exception()
         val nmsItem = (item as CraftItemStack).handle
-        nmsItem.tagOrDefault.remove(UNIQUE_ID_KEY)
+        ItemUniqueID.wipeUniqueID(nmsItem)
+    }
+
+    private fun checkIfItemHasHandle(item: ItemStack): Boolean {
+        if (item.type == Material.AIR) return false
+        if (item !is CraftItemStack || item.handle == null) return false
+        return true
     }
 }
