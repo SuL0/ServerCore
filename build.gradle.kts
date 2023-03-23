@@ -62,12 +62,12 @@ subprojects {
         jar {
             duplicatesStrategy = DuplicatesStrategy.EXCLUDE  // plugin.yml 을 SkullCreator 이 덮어쓰려 함 (INCLUDE 하면 덮어씀)
             archiveFileName.set(getPluginName.invoke(project))
-            val destiny = when (project.name) {
+            val destination = when (project.name) {
                 "bungee" -> bungeeCopyDestination
                 "bukkit" -> bukkitCopyDestination
                 else -> throw Exception()
             }
-            destinationDirectory.set(file(destiny))  // clean 영향 안 받음. (영향받는 건 project.buildDir으로 설정했을 때)
+            destinationDirectory.set(file(destination))  // clean 영향 안 받음. (영향받는 건 project.buildDir으로 설정했을 때)
             from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
             finalizedBy(publishToMavenLocal)
         }

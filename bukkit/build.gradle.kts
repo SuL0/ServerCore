@@ -3,7 +3,7 @@ group = "kr.sul.servercore"
 version = ext.get("version")!!
 
 repositories {
-    mavenLocal()
+    mavenLocal()  // mavenLocal을 아래에 배치하면 빌드 때 마다 원격에서 의존성을 다운로드하게 됨 > 빌드타임 증가
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://repo.dmulloy2.net/nexus/repository/public/")
@@ -37,7 +37,7 @@ dependencies {
     compileOnly(files("$pluginStorage/CrackShotAddition_S.jar"))
 //    api("co.aikar:acf-paper:0.5.1-SNAPSHOT")
 //    api("redis.clients:jedis:4.2.3")
-    val lampVersion = "3.1.2"
+    val lampVersion = "3.1.3"
 //    api("com.github.Revxrsal.Lamp:common:$lampVersion")
 //    api("com.github.Revxrsal.Lamp:bukkit:$lampVersion")
 

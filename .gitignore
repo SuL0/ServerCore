@@ -114,5 +114,5 @@ run/
 /.gradle/
 /build/
 /debug/
-/Bukkit/build/
-/Bungee/build/
+/bukkit/build/
+/bungee/build/

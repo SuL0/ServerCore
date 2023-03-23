@@ -10,14 +10,14 @@ object UniqueIdAPI {
 
     @JvmStatic
     fun hasUniqueID(item: ItemStack): Boolean {
-        if (checkIfItemHasHandle(item)) return false
+        if (!checkIfItemHasHandle(item)) return false
         val nmsItem = (item as CraftItemStack).handle
         return ItemUniqueID.hasUniqueID(nmsItem)
     }
 
     @JvmStatic
     fun getUniqueID(item: ItemStack): String? {
-        if (checkIfItemHasHandle(item)) return null
+        if (!checkIfItemHasHandle(item)) return null
         val nmsItem = (item as CraftItemStack).handle
         return ItemUniqueID.getUniqueID(nmsItem)
     }
@@ -31,21 +31,21 @@ object UniqueIdAPI {
 
     @JvmStatic
     fun carveSpecificUniqueID(item: ItemStack, uuid: UUID) {
-        if (checkIfItemHasHandle(item)) throw Exception()
+        if (!checkIfItemHasHandle(item)) throw Exception()
         val nmsItem = (item as CraftItemStack).handle
         ItemUniqueID.carveSpecificUniqueID(nmsItem, uuid)
     }
 
     @JvmStatic
     fun wipeAndCarveNewUniqueID(item: ItemStack) {
-        if (checkIfItemHasHandle(item)) throw Exception()
+        if (!checkIfItemHasHandle(item)) throw Exception()
         val nmsItem = (item as CraftItemStack).handle
         ItemUniqueID.wipeAndCarveNewUniqueID(nmsItem)
     }
 
     @JvmStatic
     fun wipeUniqueID(item: ItemStack) {
-        if (checkIfItemHasHandle(item)) throw Exception()
+        if (!checkIfItemHasHandle(item)) throw Exception()
         val nmsItem = (item as CraftItemStack).handle
         ItemUniqueID.wipeUniqueID(nmsItem)
     }
