@@ -1,19 +1,18 @@
 package kr.sul.servercore.extensionfunction
 
 import kr.sul.servercore.ServerCore
-import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.npc.ai.NPCHolder
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 
 // Bukkit.getOnlinePlayers 에는 world.players 와 달리 Citizen NPC가 섞여들어가는 일은 없음
 object WorldPlayers {
     private var isCitizenEnabled = false
     init {
-        Bukkit.getScheduler().runTask(ServerCore.plugin) {
+        Bukkit.getScheduler().runTask(ServerCore.plugin) { _ ->
             if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
                 isCitizenEnabled = true
             }

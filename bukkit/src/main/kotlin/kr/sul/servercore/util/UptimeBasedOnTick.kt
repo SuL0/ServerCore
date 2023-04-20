@@ -7,7 +7,7 @@ object UptimeBasedOnTick {
     var uptimeBasedOnTick = 0L
 
     init {
-        Bukkit.getScheduler().runTaskTimer(plugin, {
+        Bukkit.getScheduler().runTaskTimer(plugin, { _ ->
             uptimeBasedOnTick += 1
         }, 0L, 1L)
     }

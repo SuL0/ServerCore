@@ -50,7 +50,7 @@ class ServerCore : JavaPlugin() {
     }
     private fun registerDataSaveSchedule() {
         ObjectInitializer.forceInit(DataSaveScheduler::class.java)
-        getCommand("서버저장").executor = DataSaveCommand
+        getCommand("서버저장")!!.setExecutor(DataSaveCommand)
     }
 
 

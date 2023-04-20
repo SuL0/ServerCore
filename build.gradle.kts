@@ -4,20 +4,25 @@ plugins {
     id("kr.entree.spigradle.bungee") version "2.2.3" apply false
     `maven-publish` apply true
     `java-library` apply true
+    id("io.papermc.paperweight.userdev") version "1.5.3" apply false
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
 }
-
 group = "kr.sul.servercore"
-version = "1.0-SNAPSHOT"
+version = "1.19.4"
 
 val versionMirror = version
 val rootName = "ServerCore"
-val pluginStorage = "C:/MC-Development/PluginStorage"
-val bukkitCopyDestination = "C:/MC-Development/마인즈서버/plugins"
+val bukkitCopyDestination = "C:/MC-Development/Minetopia/plugins"
 val bungeeCopyDestination = "C:/MC-Development/Waterfall/plugins"
 
 val getPluginName: (Project) -> String = { givenProject ->
@@ -29,13 +34,10 @@ subprojects {
     ext {
         set("rootName", rootName)
         set("version", versionMirror)
-        set("pluginStorage", pluginStorage)
     }
 
     tasks {
         compileJava.get().options.encoding = "UTF-8"
-        compileKotlin.get().kotlinOptions.jvmTarget = "1.8"
-        compileTestKotlin.get().kotlinOptions.jvmTarget = "1.8"
     }
 
     publishing {
@@ -77,4 +79,12 @@ subprojects {
 
 project(":bungee").run {
     apply(plugin="kr.entree.spigradle.bungee")
+}
+project(":bukkit").run {
+    apply(plugin="io.papermc.paperweight.userdev")
+    dependencies {
+        val paperweight = (this as ExtensionAware).extensions.getByName("paperweight")
+                as io.papermc.paperweight.userdev.PaperweightUserDependenciesExtension
+        paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
+    }
 }

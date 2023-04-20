@@ -116,3 +116,4 @@ run/
 /debug/
 /bukkit/build/
 /bungee/build/
+/bukkit/.gradle/

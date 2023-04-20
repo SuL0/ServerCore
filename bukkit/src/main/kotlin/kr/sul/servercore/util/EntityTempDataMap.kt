@@ -31,7 +31,6 @@ class EntityTempDataMap<V> private constructor(): HashMap<Entity, V>(), Listener
 
     @EventHandler(priority = EventPriority.HIGH)
     fun onEntityDeath(e: EntityDeathEvent) {
-        if (e.isCancelled) return
         if (e.entity is Player) return
         if (this.contains(e.entity)) {
             this.remove(e.entity)

@@ -96,7 +96,7 @@ object SimplyBackup {
 
         // Async / Sync 여부
         if (asAsync) {
-            Bukkit.getScheduler().runTaskAsynchronously(plugin) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin) { _ ->
                 backupRunnable.run()
             }
         } else {

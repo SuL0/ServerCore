@@ -39,7 +39,7 @@ object CustomFileUtil {
 
         // Async / Sync 여부
         if (asAsync) {
-            Bukkit.getScheduler().runTaskAsynchronously(plugin) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin) { _ ->
                 taskRunnable.run()
             }
         } else {

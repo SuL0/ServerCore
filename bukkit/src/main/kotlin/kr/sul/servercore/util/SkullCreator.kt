@@ -115,7 +115,7 @@ object SkullCreator {
         notNull(item, "item")
         notNull(id, "id")
         val meta = item.itemMeta as SkullMeta
-        meta.owningPlayer = Bukkit.getOfflinePlayer(id)
+        meta.owningPlayer = Bukkit.getOfflinePlayer(id!!)
         item.itemMeta = meta
         return item
     }
@@ -163,7 +163,7 @@ object SkullCreator {
         notNull(block, "block")
         notNull(name, "name")
         val state = block.state as Skull
-        state.owningPlayer = Bukkit.getOfflinePlayer(name)
+        state.owner = name
         state.update(false, false)
     }
 
@@ -178,7 +178,7 @@ object SkullCreator {
         notNull(id, "id")
         setToSkull(block)
         val state = block.state as Skull
-        state.owningPlayer = Bukkit.getOfflinePlayer(id)
+        state.owner = Bukkit.getOfflinePlayer(id!!).name
         state.update(false, false)
     }
 

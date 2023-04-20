@@ -2,13 +2,11 @@ package kr.sul.servercore.inventoryevent
 
 import kr.sul.servercore.util.InventorySlotConverterUtil
 import kr.sul.servercore.util.UniqueIdAPI
-import net.minecraft.server.v1_12_R1.Container
-import net.minecraft.server.v1_12_R1.ICrafting
-import net.minecraft.server.v1_12_R1.IInventory
-import net.minecraft.server.v1_12_R1.NonNullList
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerListener
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -25,21 +23,22 @@ object InventoryItemListener : Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     fun onJoin(e: PlayerJoinEvent) {
         val ep = (e.player as CraftPlayer).handle
-        ep.defaultContainer.addSlotListener(object : ICrafting {
+        ep.containerMenu.addSlotListener(object : ContainerListener {
             val p = e.player
-            override fun a(container: Container, nonNullList: NonNullList<net.minecraft.server.v1_12_R1.ItemStack>) {}
-            override fun setContainerData(container: Container, i: Int, i1: Int) {}
-            override fun setContainerData(container: Container, iInventory: IInventory) {}
 
-            override fun a(container: Container, nmsSlot: Int, nmsIs: net.minecraft.server.v1_12_R1.ItemStack) {
+            override fun slotChanged(
+                container: AbstractContainerMenu,
+                nmsSlot: Int,
+                nmsIs: net.minecraft.world.item.ItemStack
+            ) {
                 val newSlot = InventorySlotConverterUtil.nmsSlotToSpigotSlot(nmsSlot)
-                val newIs = if (p.inventory.getItem(newSlot) != null) p.inventory.getItem(newSlot) else ItemStack(Material.AIR)  // p.itemInMainHand와 다르다는걸 주의!
+                val newIs = if (p.inventory.getItem(newSlot) != null) p.inventory.getItem(newSlot)!! else ItemStack(Material.AIR)  // p.itemInMainHand와 다르다는걸 주의!
 
                 // "슬롯을 바꾸지 않은 채로" 손에 든 아이템이 바꼈을 때. 아이템 정보 바뀌는건 제외(UID 비교. UID가 없다면 중복되게 호출될 수 있음)
                 if (newSlot == p.inventory.heldItemSlot) {
                     val clonedPreviousMainIs = clonedHeldItemOfPlayers[p] ?: ItemStack(Material.AIR)
                     val bHeldItemIsChangedToAnother = !(UniqueIdAPI.hasUniqueID(clonedPreviousMainIs) && UniqueIdAPI.hasUniqueID(newIs)
-                                                                && UniqueIdAPI.getUniqueID(clonedPreviousMainIs) == UniqueIdAPI.getUniqueID(newIs))
+                            && UniqueIdAPI.getUniqueID(clonedPreviousMainIs) == UniqueIdAPI.getUniqueID(newIs))
                     // true: 이전 아이템과 UID가 중복이 되지 않음(=다른 아이템으로 바꼈을 때) / UID가 없는 경우
 
                     if (bHeldItemIsChangedToAnother) {
@@ -53,6 +52,9 @@ object InventoryItemListener : Listener {
                     Bukkit.getPluginManager().callEvent(InventoryItemChangedEvent(p, newSlot, newIs)) // EVENT: Call InventoryItemChangedEvent
                 }
             }
+
+            override fun dataChanged(handler: AbstractContainerMenu, property: Int, value: Int) {
+            }
         })
     }
 
@@ -61,7 +63,7 @@ object InventoryItemListener : Listener {
         if (e.isCancelled) return
         val p = e.player
         val clonedPreviousIs = e.player.inventory.getItem(e.previousSlot)?.clone() ?: ItemStack(Material.AIR) // clone()은 일부러 a()에서 PreviousItem ItemMeta 수정 못하는걸 동일시 하기 위해서 넣었음.
-        val newIs = if (p.inventory.getItem(e.newSlot) != null) e.player.inventory.getItem(e.newSlot) else ItemStack(Material.AIR)
+        val newIs = if (p.inventory.getItem(e.newSlot) != null) e.player.inventory.getItem(e.newSlot)!! else ItemStack(Material.AIR)
         if (clonedPreviousIs.type == Material.AIR && newIs.type == Material.AIR) return
         Bukkit.getPluginManager().callEvent(PlayerHeldItemIsChangedToAnotherEvent(p, clonedPreviousIs, newIs, e.newSlot))
         clonedHeldItemOfPlayers[p] = newIs.clone() // NOTE: Drop이벤트가 취소되던 말던간에 버킷이 일단 ItemStack을 AIR로 바꿔서, .clone해서 저장해야 함.

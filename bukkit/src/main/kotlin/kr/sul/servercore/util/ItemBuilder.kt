@@ -19,7 +19,7 @@ object ItemBuilder {
 
     fun ItemStack.nameIB(name: String): ItemStack {
         val meta = itemMeta
-        meta.displayName = name.c()
+        meta.setDisplayName(name.c())
         itemMeta = meta
         return this
     }
@@ -97,7 +97,7 @@ object ItemBuilder {
                 || type == Material.LEATHER_LEGGINGS) {
 
             val meta = itemMeta as LeatherArmorMeta
-            meta.color = color
+            meta.setColor(color)
             itemMeta = meta
             return this
         } else {

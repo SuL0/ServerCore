@@ -22,7 +22,7 @@ object SimplyLog {
         }
 
         // 저장 scheduler
-        Bukkit.getScheduler().runTaskTimer(plugin, {
+        Bukkit.getScheduler().runTaskTimer(plugin, { _ ->
             saveAllToFile(true)
         }, SAVE_INTERVAL, SAVE_INTERVAL)
     }
@@ -50,7 +50,7 @@ object SimplyLog {
 
         // Async / Sync 여부
         if (asAsync) {
-            Bukkit.getScheduler().runTaskAsynchronously(plugin) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin) { _ ->
                 taskRunnable.run()
             }
         } else {

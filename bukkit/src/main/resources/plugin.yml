@@ -1,6 +1,6 @@
 name: ServerCore
-version: 1.0-SNAPSHOT
-api-version: 1.12
+version: 1.19.4
+api-version: 1.19
 main: kr.sul.servercore.ServerCore
 author: SuL
 load: STARTUP
